@@ -10,7 +10,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from './Modal';
-import { Button } from './Button';
+import { Button } from '../Button/Button';
 
 const meta: Meta<typeof Modal> = {
   title: 'Components/Modal',
