@@ -1,17 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from './Card';
-import { Button } from '../Button/Button';
+import { LayoutRenderer } from '../../core/layout-renderer';
+import { LayoutNode } from '../../types/layout';
+// Import to register all components
+import '../../core/register-components';
 
-const meta: Meta<typeof Card> = {
+const meta: Meta<typeof LayoutRenderer> = {
   title: 'Components/Card',
-  component: Card,
+  component: LayoutRenderer,
   parameters: {
     layout: 'centered',
   },
@@ -19,81 +14,349 @@ const meta: Meta<typeof Card> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Card>;
+type Story = StoryObj<typeof LayoutRenderer>;
 
 export const Default: Story = {
-  render: () => (
-    <Card className="w-96">
-      <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card description goes here</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>This is the card content area where you can place any content.</p>
-      </CardContent>
-      <CardFooter>
-        <Button>Action</Button>
-      </CardFooter>
-    </Card>
-  ),
+  render: () => {
+    const config: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Card',
+        componentProps: {
+          className: 'w-96',
+        },
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'CardHeader',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'CardTitle',
+                componentProps: {
+                  children: 'Card Title',
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'CardDescription',
+                componentProps: {
+                  children: 'Card description goes here',
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'CardContent',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <p>This is the card content area where you can place any content.</p>,
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'CardFooter',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Button',
+                componentProps: {
+                  children: 'Action',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
 };
 
 export const Simple: Story = {
-  render: () => (
-    <Card className="w-96">
-      <CardContent className="pt-6">
-        <p>Simple card with just content.</p>
-      </CardContent>
-    </Card>
-  ),
+  render: () => {
+    const config: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Card',
+        componentProps: {
+          className: 'w-96',
+        },
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'CardContent',
+            componentProps: {
+              className: 'pt-6',
+            },
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <p>Simple card with just content.</p>,
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
 };
 
 export const WithoutFooter: Story = {
-  render: () => (
-    <Card className="w-96">
-      <CardHeader>
-        <CardTitle>Card Without Footer</CardTitle>
-        <CardDescription>This card doesn't have a footer</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>Content goes here without any footer actions.</p>
-      </CardContent>
-    </Card>
-  ),
+  render: () => {
+    const config: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Card',
+        componentProps: {
+          className: 'w-96',
+        },
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'CardHeader',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'CardTitle',
+                componentProps: {
+                  children: 'Card Without Footer',
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'CardDescription',
+                componentProps: {
+                  children: "This card doesn't have a footer",
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'CardContent',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <p>Content goes here without any footer actions.</p>,
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
 };
 
 export const MultipleCards: Story = {
-  render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl">
-      <Card>
-        <CardHeader>
-          <CardTitle>Card 1</CardTitle>
-          <CardDescription>First card</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Content for card 1</p>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card 2</CardTitle>
-          <CardDescription>Second card</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Content for card 2</p>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card 3</CardTitle>
-          <CardDescription>Third card</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Content for card 3</p>
-        </CardContent>
-      </Card>
-    </div>
-  ),
+  render: () => {
+    const config: LayoutNode = {
+      type: 'grid',
+      props: {
+        columns: { default: 1, md: 3 },
+        gap: 4,
+        className: 'w-full max-w-4xl',
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'Card',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'CardHeader',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardTitle',
+                    componentProps: {
+                      children: 'Card 1',
+                    },
+                  },
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardDescription',
+                    componentProps: {
+                      children: 'First card',
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'CardContent',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'Box',
+                    componentProps: {
+                      children: <p>Content for card 1</p>,
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Card',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'CardHeader',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardTitle',
+                    componentProps: {
+                      children: 'Card 2',
+                    },
+                  },
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardDescription',
+                    componentProps: {
+                      children: 'Second card',
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'CardContent',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'Box',
+                    componentProps: {
+                      children: <p>Content for card 2</p>,
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Card',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'CardHeader',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardTitle',
+                    componentProps: {
+                      children: 'Card 3',
+                    },
+                  },
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardDescription',
+                    componentProps: {
+                      children: 'Third card',
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'CardContent',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'Box',
+                    componentProps: {
+                      children: <p>Content for card 3</p>,
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
   parameters: {
     layout: 'padded',
   },

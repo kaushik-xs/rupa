@@ -72,7 +72,38 @@ export const RenderNode: React.FC<RenderNodeProps> = ({ node, context = {} }) =>
     delete componentProps.component;
     delete componentProps.componentProps;
 
-    return <Component {...componentProps} />;
+    // Handle children: support both nested LayoutNode children and componentProps.children
+    let children: React.ReactNode = undefined;
+    
+    // If node.children exists, render them recursively
+    if (node.children && node.children.length > 0) {
+      const renderedChildren = node.children.map((child, index) => (
+        <RenderNode key={child.id || `child-${index}`} node={child} context={context} />
+      ));
+      
+      // If componentProps.children also exists, combine them
+      if (componentProps.children !== undefined) {
+        // If componentProps.children is a string, wrap it
+        if (typeof componentProps.children === 'string') {
+          children = [componentProps.children, ...renderedChildren];
+        } else {
+          // Otherwise, combine React nodes
+          children = [componentProps.children, ...renderedChildren];
+        }
+      } else {
+        children = renderedChildren;
+      }
+    } else if (componentProps.children !== undefined) {
+      // Only componentProps.children exists
+      children = componentProps.children;
+    }
+
+    // Remove children from props if we're handling it separately
+    if (node.children && node.children.length > 0) {
+      delete componentProps.children;
+    }
+
+    return <Component {...componentProps}>{children}</Component>;
   }
 
   // Handle layout components

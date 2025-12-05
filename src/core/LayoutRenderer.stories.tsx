@@ -1,30 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { LayoutRenderer } from './layout-renderer';
 import { LayoutNode } from '../types/layout';
-import { widgetRegistry } from './registry';
-import { Button } from '../components/Button/Button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/Card/Card';
-import { Input } from '../components/Input/Input';
-import { Badge } from '../components/Badge/Badge';
-import { Alert, AlertTitle, AlertDescription } from '../components/Alert/Alert';
-import { Box } from '../components/layouts';
-// Import to register all layouts
+// Import to register all layouts and components
 import './register-layouts';
-
-// Register components in widget registry for JSON-driven rendering
-widgetRegistry.register('Button', { component: Button });
-widgetRegistry.register('Card', { component: Card });
-widgetRegistry.register('CardHeader', { component: CardHeader });
-widgetRegistry.register('CardTitle', { component: CardTitle });
-widgetRegistry.register('CardDescription', { component: CardDescription });
-widgetRegistry.register('CardContent', { component: CardContent });
-widgetRegistry.register('CardFooter', { component: CardFooter });
-widgetRegistry.register('Input', { component: Input });
-widgetRegistry.register('Badge', { component: Badge });
-widgetRegistry.register('Alert', { component: Alert });
-widgetRegistry.register('AlertTitle', { component: AlertTitle });
-widgetRegistry.register('AlertDescription', { component: AlertDescription });
-widgetRegistry.register('Box', { component: Box });
+import './register-components';
 
 const meta: Meta<typeof LayoutRenderer> = {
   title: 'Core/LayoutRenderer',
@@ -93,15 +72,27 @@ export const NestedLayouts: Story = {
               type: 'component',
               props: {
                 component: 'Alert',
-                componentProps: {
-                  children: (
-                    <>
-                      <AlertTitle>Welcome</AlertTitle>
-                      <AlertDescription>This is a nested layout example</AlertDescription>
-                    </>
-                  ),
-                },
               },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'AlertTitle',
+                    componentProps: {
+                      children: 'Welcome',
+                    },
+                  },
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'AlertDescription',
+                    componentProps: {
+                      children: 'This is a nested layout example',
+                    },
+                  },
+                },
+              ],
             },
             {
               type: 'grid',
@@ -114,49 +105,103 @@ export const NestedLayouts: Story = {
                   type: 'component',
                   props: {
                     component: 'Card',
-                    componentProps: {
-                      children: (
-                        <>
-                          <CardHeader>
-                            <CardTitle>Card 1</CardTitle>
-                          </CardHeader>
-                          <CardContent>Content for card 1</CardContent>
-                        </>
-                      ),
-                    },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardHeader',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardTitle',
+                            componentProps: {
+                              children: 'Card 1',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardContent',
+                        componentProps: {
+                          children: 'Content for card 1',
+                        },
+                      },
+                    },
+                  ],
                 },
                 {
                   type: 'component',
                   props: {
                     component: 'Card',
-                    componentProps: {
-                      children: (
-                        <>
-                          <CardHeader>
-                            <CardTitle>Card 2</CardTitle>
-                          </CardHeader>
-                          <CardContent>Content for card 2</CardContent>
-                        </>
-                      ),
-                    },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardHeader',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardTitle',
+                            componentProps: {
+                              children: 'Card 2',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardContent',
+                        componentProps: {
+                          children: 'Content for card 2',
+                        },
+                      },
+                    },
+                  ],
                 },
                 {
                   type: 'component',
                   props: {
                     component: 'Card',
-                    componentProps: {
-                      children: (
-                        <>
-                          <CardHeader>
-                            <CardTitle>Card 3</CardTitle>
-                          </CardHeader>
-                          <CardContent>Content for card 3</CardContent>
-                        </>
-                      ),
-                    },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardHeader',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardTitle',
+                            componentProps: {
+                              children: 'Card 3',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardContent',
+                        componentProps: {
+                          children: 'Content for card 3',
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
             },

@@ -1,30 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { LayoutRenderer } from './layout-renderer';
 import { LayoutNode } from '../types/layout';
-import { widgetRegistry } from './registry';
-import { Button } from '../components/Button/Button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/Card/Card';
-import { Input } from '../components/Input/Input';
-import { Badge } from '../components/Badge/Badge';
-import { Alert, AlertTitle, AlertDescription } from '../components/Alert/Alert';
-import { Box } from '../components/layouts';
-// Import to register all layouts
+// Import to register all layouts and components
 import './register-layouts';
-
-// Register components
-widgetRegistry.register('Button', { component: Button });
-widgetRegistry.register('Card', { component: Card });
-widgetRegistry.register('CardHeader', { component: CardHeader });
-widgetRegistry.register('CardTitle', { component: CardTitle });
-widgetRegistry.register('CardDescription', { component: CardDescription });
-widgetRegistry.register('CardContent', { component: CardContent });
-widgetRegistry.register('CardFooter', { component: CardFooter });
-widgetRegistry.register('Input', { component: Input });
-widgetRegistry.register('Badge', { component: Badge });
-widgetRegistry.register('Alert', { component: Alert });
-widgetRegistry.register('AlertTitle', { component: AlertTitle });
-widgetRegistry.register('AlertDescription', { component: AlertDescription });
-widgetRegistry.register('Box', { component: Box });
+import './register-components';
 
 const meta: Meta<typeof LayoutRenderer> = {
   title: 'Examples/Real World Scenarios',
@@ -151,61 +130,187 @@ export const AdminDashboard: Story = {
                   type: 'component',
                   props: {
                     component: 'Card',
-                    componentProps: {
-                      children: (
-                        <>
-                          <CardHeader>
-                            <CardTitle>Total Users</CardTitle>
-                            <CardDescription>Active users this month</CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="text-3xl font-bold">12,345</div>
-                            <Badge variant="secondary" className="mt-2">+12% from last month</Badge>
-                          </CardContent>
-                        </>
-                      ),
-                    },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardHeader',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardTitle',
+                            componentProps: {
+                              children: 'Total Users',
+                            },
+                          },
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardDescription',
+                            componentProps: {
+                              children: 'Active users this month',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardContent',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Box',
+                            componentProps: {
+                              children: <div className="text-3xl font-bold">12,345</div>,
+                            },
+                          },
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Badge',
+                            componentProps: {
+                              variant: 'secondary',
+                              className: 'mt-2',
+                              children: '+12% from last month',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
                   type: 'component',
                   props: {
                     component: 'Card',
-                    componentProps: {
-                      children: (
-                        <>
-                          <CardHeader>
-                            <CardTitle>Revenue</CardTitle>
-                            <CardDescription>Total revenue this month</CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="text-3xl font-bold">$45,678</div>
-                            <Badge variant="secondary" className="mt-2">+8% from last month</Badge>
-                          </CardContent>
-                        </>
-                      ),
-                    },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardHeader',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardTitle',
+                            componentProps: {
+                              children: 'Revenue',
+                            },
+                          },
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardDescription',
+                            componentProps: {
+                              children: 'Total revenue this month',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardContent',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Box',
+                            componentProps: {
+                              children: <div className="text-3xl font-bold">$45,678</div>,
+                            },
+                          },
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Badge',
+                            componentProps: {
+                              variant: 'secondary',
+                              className: 'mt-2',
+                              children: '+8% from last month',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
                   type: 'component',
                   props: {
                     component: 'Card',
-                    componentProps: {
-                      children: (
-                        <>
-                          <CardHeader>
-                            <CardTitle>Orders</CardTitle>
-                            <CardDescription>Orders processed</CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="text-3xl font-bold">1,234</div>
-                            <Badge variant="secondary" className="mt-2">+5% from last month</Badge>
-                          </CardContent>
-                        </>
-                      ),
-                    },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardHeader',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardTitle',
+                            componentProps: {
+                              children: 'Orders',
+                            },
+                          },
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'CardDescription',
+                            componentProps: {
+                              children: 'Orders processed',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardContent',
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Box',
+                            componentProps: {
+                              children: <div className="text-3xl font-bold">1,234</div>,
+                            },
+                          },
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Badge',
+                            componentProps: {
+                              variant: 'secondary',
+                              className: 'mt-2',
+                              children: '+5% from last month',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  ],
                 },
               ],
             },
@@ -264,36 +369,147 @@ export const ECommerceProductGrid: Story = {
                   props: {
                     component: 'Box',
                     componentProps: {
-                      children: (
-                        <div className="space-y-4">
-                          <h3 className="font-semibold">Filters</h3>
-                          <div className="space-y-2">
-                            <div>
-                              <label className="text-sm font-medium">Category</label>
-                              <div className="mt-1 space-y-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  <span className="text-sm">Electronics</span>
-                                </div>
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  <span className="text-sm">Clothing</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium">Price Range</label>
-                              <div className="mt-1 flex gap-2">
-                                <Input placeholder="Min" type="number" className="w-full" />
-                                <Input placeholder="Max" type="number" className="w-full" />
-                              </div>
-                            </div>
-                            <Button className="w-full">Apply Filters</Button>
-                          </div>
-                        </div>
-                      ),
+                      className: 'space-y-4',
                     },
                   },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Box',
+                        componentProps: {
+                          children: <h3 className="font-semibold">Filters</h3>,
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Box',
+                        componentProps: {
+                          className: 'space-y-2',
+                        },
+                      },
+                      children: [
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Box',
+                          },
+                          children: [
+                            {
+                              type: 'component',
+                              props: {
+                                component: 'Box',
+                                componentProps: {
+                                  children: <label className="text-sm font-medium">Category</label>,
+                                },
+                              },
+                            },
+                            {
+                              type: 'component',
+                              props: {
+                                component: 'Box',
+                                componentProps: {
+                                  className: 'mt-1 space-y-1',
+                                },
+                              },
+                              children: [
+                                {
+                                  type: 'component',
+                                  props: {
+                                    component: 'Box',
+                                    componentProps: {
+                                      className: 'flex items-center',
+                                      children: (
+                                        <>
+                                          <input type="checkbox" className="mr-2" />
+                                          <span className="text-sm">Electronics</span>
+                                        </>
+                                      ),
+                                    },
+                                  },
+                                },
+                                {
+                                  type: 'component',
+                                  props: {
+                                    component: 'Box',
+                                    componentProps: {
+                                      className: 'flex items-center',
+                                      children: (
+                                        <>
+                                          <input type="checkbox" className="mr-2" />
+                                          <span className="text-sm">Clothing</span>
+                                        </>
+                                      ),
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Box',
+                          },
+                          children: [
+                            {
+                              type: 'component',
+                              props: {
+                                component: 'Box',
+                                componentProps: {
+                                  children: <label className="text-sm font-medium">Price Range</label>,
+                                },
+                              },
+                            },
+                            {
+                              type: 'flex',
+                              props: {
+                                gap: 2,
+                                className: 'mt-1',
+                              },
+                              children: [
+                                {
+                                  type: 'component',
+                                  props: {
+                                    component: 'Input',
+                                    componentProps: {
+                                      placeholder: 'Min',
+                                      type: 'number',
+                                      className: 'w-full',
+                                    },
+                                  },
+                                },
+                                {
+                                  type: 'component',
+                                  props: {
+                                    component: 'Input',
+                                    componentProps: {
+                                      placeholder: 'Max',
+                                      type: 'number',
+                                      className: 'w-full',
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                        {
+                          type: 'component',
+                          props: {
+                            component: 'Button',
+                            componentProps: {
+                              className: 'w-full',
+                              children: 'Apply Filters',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  ],
                 },
               ],
             },
@@ -341,22 +557,65 @@ export const ECommerceProductGrid: Story = {
                     type: 'component',
                     props: {
                       component: 'Box',
-                      componentProps: {
-                        children: (
-                          <>
-                            <div className="aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
-                              <span className="text-muted-foreground">Product {i + 1}</span>
-                            </div>
-                            <h3 className="font-semibold">Product Name {i + 1}</h3>
-                            <p className="text-sm text-muted-foreground mb-2">Product description</p>
-                            <div className="flex items-center justify-between">
-                              <span className="font-bold">${(i + 1) * 10}.99</span>
-                              <Button size="sm">Add to Cart</Button>
-                            </div>
-                          </>
-                        ),
-                      },
                     },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'Box',
+                          componentProps: {
+                            className: 'aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center',
+                            children: <span className="text-muted-foreground">Product {i + 1}</span>,
+                          },
+                        },
+                      },
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'Box',
+                          componentProps: {
+                            children: <h3 className="font-semibold">Product Name {i + 1}</h3>,
+                          },
+                        },
+                      },
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'Box',
+                          componentProps: {
+                            children: <p className="text-sm text-muted-foreground mb-2">Product description</p>,
+                          },
+                        },
+                      },
+                      {
+                        type: 'flex',
+                        props: {
+                          justify: 'between',
+                          align: 'center',
+                        },
+                        children: [
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Box',
+                              componentProps: {
+                                children: <span className="font-bold">${(i + 1) * 10}.99</span>,
+                              },
+                            },
+                          },
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                size: 'sm',
+                                children: 'Add to Cart',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    ],
                   })),
                 },
               ],
@@ -436,77 +695,217 @@ export const AnalyticsDashboard: Story = {
               type: 'component',
               props: {
                 component: 'Card',
-                componentProps: {
-                  children: (
-                    <>
-                      <CardHeader>
-                        <CardTitle className="text-sm font-medium">Total Visitors</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-2xl font-bold">45,231</div>
-                        <Badge variant="secondary" className="mt-2">+20.1%</Badge>
-                      </CardContent>
-                    </>
-                  ),
-                },
               },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardHeader',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardTitle',
+                        componentProps: {
+                          className: 'text-sm font-medium',
+                          children: 'Total Visitors',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardContent',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Box',
+                        componentProps: {
+                          children: <div className="text-2xl font-bold">45,231</div>,
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Badge',
+                        componentProps: {
+                          variant: 'secondary',
+                          className: 'mt-2',
+                          children: '+20.1%',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
             },
             {
               type: 'component',
               props: {
                 component: 'Card',
-                componentProps: {
-                  children: (
-                    <>
-                      <CardHeader>
-                        <CardTitle className="text-sm font-medium">Page Views</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-2xl font-bold">142,543</div>
-                        <Badge variant="secondary" className="mt-2">+12.5%</Badge>
-                      </CardContent>
-                    </>
-                  ),
-                },
               },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardHeader',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardTitle',
+                        componentProps: {
+                          className: 'text-sm font-medium',
+                          children: 'Page Views',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardContent',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Box',
+                        componentProps: {
+                          children: <div className="text-2xl font-bold">142,543</div>,
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Badge',
+                        componentProps: {
+                          variant: 'secondary',
+                          className: 'mt-2',
+                          children: '+12.5%',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
             },
             {
               type: 'component',
               props: {
                 component: 'Card',
-                componentProps: {
-                  children: (
-                    <>
-                      <CardHeader>
-                        <CardTitle className="text-sm font-medium">Bounce Rate</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-2xl font-bold">32.4%</div>
-                        <Badge variant="secondary" className="mt-2">-2.1%</Badge>
-                      </CardContent>
-                    </>
-                  ),
-                },
               },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardHeader',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardTitle',
+                        componentProps: {
+                          className: 'text-sm font-medium',
+                          children: 'Bounce Rate',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardContent',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Box',
+                        componentProps: {
+                          children: <div className="text-2xl font-bold">32.4%</div>,
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Badge',
+                        componentProps: {
+                          variant: 'secondary',
+                          className: 'mt-2',
+                          children: '-2.1%',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
             },
             {
               type: 'component',
               props: {
                 component: 'Card',
-                componentProps: {
-                  children: (
-                    <>
-                      <CardHeader>
-                        <CardTitle className="text-sm font-medium">Avg. Session</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-2xl font-bold">4m 32s</div>
-                        <Badge variant="secondary" className="mt-2">+8.3%</Badge>
-                      </CardContent>
-                    </>
-                  ),
-                },
               },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardHeader',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardTitle',
+                        componentProps: {
+                          className: 'text-sm font-medium',
+                          children: 'Avg. Session',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardContent',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Box',
+                        componentProps: {
+                          children: <div className="text-2xl font-bold">4m 32s</div>,
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Badge',
+                        componentProps: {
+                          variant: 'secondary',
+                          className: 'mt-2',
+                          children: '+8.3%',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

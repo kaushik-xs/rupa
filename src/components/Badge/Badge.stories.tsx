@@ -1,57 +1,186 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Badge } from './Badge';
+import { LayoutRenderer } from '../../core/layout-renderer';
+import { LayoutNode } from '../../types/layout';
+// Import to register all components
+import '../../core/register-components';
 
-const meta: Meta<typeof Badge> = {
+const meta: Meta<typeof LayoutRenderer> = {
   title: 'Components/Badge',
-  component: Badge,
+  component: LayoutRenderer,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: ['default', 'secondary', 'destructive', 'outline'],
-    },
-  },
 };
 
 export default meta;
-type Story = StoryObj<typeof Badge>;
+type Story = StoryObj<typeof LayoutRenderer>;
 
 export const Default: Story = {
-  args: {
-    children: 'Badge',
+  render: () => {
+    const config: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Badge',
+        componentProps: {
+          children: 'Badge',
+        },
+      },
+    };
+    return <LayoutRenderer config={config} />;
   },
 };
 
 export const Variants: Story = {
-  render: () => (
-    <div className="flex gap-4 flex-wrap">
-      <Badge variant="default">Default</Badge>
-      <Badge variant="secondary">Secondary</Badge>
-      <Badge variant="destructive">Destructive</Badge>
-      <Badge variant="outline">Outline</Badge>
-    </div>
-  ),
+  render: () => {
+    const config: LayoutNode = {
+      type: 'flex',
+      props: {
+        gap: 4,
+        wrap: true,
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'default',
+              children: 'Default',
+            },
+          },
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'secondary',
+              children: 'Secondary',
+            },
+          },
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'destructive',
+              children: 'Destructive',
+            },
+          },
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'outline',
+              children: 'Outline',
+            },
+          },
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
 };
 
 export const WithText: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2 items-center">
-        <span>Status:</span>
-        <Badge>Active</Badge>
-      </div>
-      <div className="flex gap-2 items-center">
-        <span>Status:</span>
-        <Badge variant="secondary">Pending</Badge>
-      </div>
-      <div className="flex gap-2 items-center">
-        <span>Status:</span>
-        <Badge variant="destructive">Error</Badge>
-      </div>
-    </div>
-  ),
+  render: () => {
+    const config: LayoutNode = {
+      type: 'flex',
+      props: {
+        direction: 'column',
+        gap: 4,
+      },
+      children: [
+        {
+          type: 'flex',
+          props: {
+            gap: 2,
+            align: 'center',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <span>Status:</span>,
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'Badge',
+                componentProps: {
+                  children: 'Active',
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: 'flex',
+          props: {
+            gap: 2,
+            align: 'center',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <span>Status:</span>,
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'Badge',
+                componentProps: {
+                  variant: 'secondary',
+                  children: 'Pending',
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: 'flex',
+          props: {
+            gap: 2,
+            align: 'center',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <span>Status:</span>,
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'Badge',
+                componentProps: {
+                  variant: 'destructive',
+                  children: 'Error',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
 };
 

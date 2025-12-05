@@ -1,112 +1,263 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import {
-  Modal,
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from './Modal';
-import { Button } from '../Button/Button';
+import { LayoutRenderer } from '../../core/layout-renderer';
+import { LayoutNode } from '../../types/layout';
+import { ModalWrapper } from './ModalWrapper';
+// Import to register all components
+import '../../core/register-components';
 
-const meta: Meta<typeof Modal> = {
+const meta: Meta<typeof LayoutRenderer> = {
   title: 'Components/Modal',
-  component: Modal,
+  component: LayoutRenderer,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-    size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg', 'xl'],
-    },
-    isOpen: {
-      control: 'boolean',
-    },
-  },
 };
 
 export default meta;
-type Story = StoryObj<typeof Modal>;
-
-const ModalWrapper = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' | 'xl' }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Example Modal"
-        size={size}
-      >
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            This is an example modal dialog. You can place any content here.
-          </p>
-          <div className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={() => setIsOpen(false)}>Confirm</Button>
-          </div>
-        </div>
-      </Modal>
-    </>
-  );
-};
+type Story = StoryObj<typeof LayoutRenderer>;
 
 export const Default: Story = {
-  render: () => <ModalWrapper />,
+  render: () => {
+    const triggerConfig: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Button',
+        componentProps: {
+          children: 'Open Modal',
+        },
+      },
+    };
+
+    const contentConfig: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Box',
+        componentProps: {
+          className: 'space-y-4',
+        },
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'Box',
+            componentProps: {
+              children: <p className="text-sm text-muted-foreground">This is an example modal dialog. You can place any content here.</p>,
+            },
+          },
+        },
+        {
+          type: 'flex',
+          props: {
+            justify: 'end',
+            gap: 2,
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Button',
+                componentProps: {
+                  variant: 'outline',
+                  children: 'Cancel',
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'Button',
+                componentProps: {
+                  children: 'Confirm',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+
+    return (
+      <ModalWrapper
+        triggerConfig={triggerConfig}
+        contentConfig={contentConfig}
+        modalProps={{
+          title: 'Example Modal',
+          size: 'md',
+        }}
+      />
+    );
+  },
 };
 
 export const Sizes: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <ModalWrapper size="sm" />
-      <ModalWrapper size="md" />
-      <ModalWrapper size="lg" />
-      <ModalWrapper size="xl" />
-    </div>
-  ),
-};
+  render: () => {
+    const sizes: Array<'sm' | 'md' | 'lg' | 'xl'> = ['sm', 'md', 'lg', 'xl'];
+    
+    const contentConfig: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Box',
+        componentProps: {
+          children: <p className="text-sm text-muted-foreground">This is an example modal dialog.</p>,
+        },
+      },
+    };
 
-const DialogExample = () => {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open Dialog</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Dialog Example</DialogTitle>
-          <DialogDescription>
-            This is an example using the Dialog components directly.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
-          <p className="text-sm text-muted-foreground">
-            You can use Dialog components for more control over the modal structure.
-          </p>
-        </div>
-        <DialogFooter>
-          <DialogTrigger asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogTrigger>
-          <DialogTrigger asChild>
-            <Button>Confirm</Button>
-          </DialogTrigger>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
+    return (
+      <div className="flex flex-col gap-4">
+        {sizes.map((size) => (
+          <ModalWrapper
+            key={size}
+            triggerText={`Open ${size.toUpperCase()} Modal`}
+            contentConfig={contentConfig}
+            modalProps={{
+              title: `Example Modal (${size.toUpperCase()})`,
+              size,
+            }}
+          />
+        ))}
+      </div>
+    );
+  },
 };
 
 export const DialogComponents: Story = {
-  render: () => <DialogExample />,
+  render: () => {
+    const config: LayoutNode = {
+      type: 'component',
+      props: {
+        component: 'Dialog',
+      },
+      children: [
+        {
+          type: 'component',
+          props: {
+            component: 'DialogTrigger',
+            componentProps: {
+              asChild: true,
+            },
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Button',
+                componentProps: {
+                  children: 'Open Dialog',
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'DialogContent',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'DialogHeader',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'DialogTitle',
+                    componentProps: {
+                      children: 'Dialog Example',
+                    },
+                  },
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'DialogDescription',
+                    componentProps: {
+                      children: 'This is an example using the Dialog components directly.',
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  className: 'space-y-4 py-4',
+                },
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'Box',
+                    componentProps: {
+                      children: <p className="text-sm text-muted-foreground">You can use Dialog components for more control over the modal structure.</p>,
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'DialogFooter',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'DialogTrigger',
+                    componentProps: {
+                      asChild: true,
+                    },
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Button',
+                        componentProps: {
+                          variant: 'outline',
+                          children: 'Cancel',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'DialogTrigger',
+                    componentProps: {
+                      asChild: true,
+                    },
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Button',
+                        componentProps: {
+                          children: 'Confirm',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    return <LayoutRenderer config={config} />;
+  },
 };
 
