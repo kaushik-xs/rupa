@@ -249,23 +249,37 @@ function substituteTemplateVariables(
   value: any,
   context: LayoutContext
 ): any {
-  // If value is a function, call it with context
+  // If value is a function, only process it if it's not a React component
+  // React components have a displayName or are class constructors
   if (typeof value === 'function') {
-    return value(context);
+    // Skip React components and class constructors
+    if (value.prototype && (value.prototype.isReactComponent || value.prototype.render)) {
+      return value;
+    }
+    // Skip functions that are likely React components (have displayName)
+    if (value.displayName || value.name?.startsWith('_')) {
+      return value;
+    }
+    try {
+      return value(context || {});
+    } catch (error) {
+      console.warn('Error executing function in template variables:', error);
+      return value;
+    }
   }
   
   if (typeof value === 'string') {
     // Check if the entire string is a single template variable (direct data binding)
     const directMatch = value.match(/^\{\{([^}]+)\}\}$/);
     if (directMatch) {
-      const result = getContextValue(directMatch[1], context);
+      const result = getContextValue(directMatch[1], context || {});
       // Return the actual value (object/array/primitive) for direct binding
       return result !== undefined ? result : '';
     }
     
     // Handle template variables within strings: "Hello {{user_data.name}}!"
     return value.replace(/\{\{([^}]+)\}\}/g, (_, path) => {
-      const result = getContextValue(path, context);
+      const result = getContextValue(path, context || {});
       
       // Return the value, or empty string if not found
       if (result === null || result === undefined) {
@@ -280,10 +294,15 @@ function substituteTemplateVariables(
   }
   
   if (Array.isArray(value)) {
-    return value.map(item => substituteTemplateVariables(item, context));
+    return value.map(item => substituteTemplateVariables(item, context || {}));
   }
   
   if (value && typeof value === 'object') {
+    // Skip React elements and other special objects
+    if (React.isValidElement(value)) {
+      return value;
+    }
+    
     const result: any = {};
     for (const [key, val] of Object.entries(value)) {
       // Skip internal functions
@@ -291,7 +310,12 @@ function substituteTemplateVariables(
         result[key] = val;
         continue;
       }
-      result[key] = substituteTemplateVariables(val, context);
+      // Skip React event handlers and other function props that shouldn't be processed
+      if (key.startsWith('on') && typeof val === 'function') {
+        result[key] = val;
+        continue;
+      }
+      result[key] = substituteTemplateVariables(val, context || {});
     }
     return result;
   }
