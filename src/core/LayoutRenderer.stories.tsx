@@ -284,3 +284,194 @@ export const ConditionalRendering: Story = {
     return <LayoutRenderer config={config} />;
   },
 };
+
+export const FormComponents: Story = {
+  render: () => {
+    const config: LayoutNode = {
+      type: 'container',
+      props: {
+        maxWidth: 'md',
+        padding: 6,
+      },
+      children: [
+        {
+          type: 'flex',
+          props: {
+            direction: 'column',
+            gap: 6,
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <h2 className="text-2xl font-bold">Form Example</h2>,
+                },
+              },
+            },
+            {
+              type: 'flex',
+              props: {
+                direction: 'column',
+                gap: 4,
+              },
+              children: [
+                {
+                  type: 'flex',
+                  props: {
+                    direction: 'column',
+                    gap: 2,
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Label',
+                        componentProps: {
+                          children: 'Email',
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Input',
+                        componentProps: {
+                          type: 'email',
+                          placeholder: 'Enter your email',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'flex',
+                  props: {
+                    direction: 'column',
+                    gap: 2,
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Label',
+                        componentProps: {
+                          children: 'Message',
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Textarea',
+                        componentProps: {
+                          placeholder: 'Enter your message',
+                          rows: 4,
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'flex',
+                  props: {
+                    align: 'center',
+                    gap: 2,
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Checkbox',
+                        componentProps: {
+                          id: 'terms',
+                        },
+                      },
+                    },
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'Label',
+                        componentProps: {
+                          htmlFor: 'terms',
+                          children: 'Accept terms and conditions',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'Button',
+                    componentProps: {
+                      children: 'Submit',
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
+};
+
+export const ChartExample: Story = {
+  render: () => {
+    const chartData = [
+      { name: 'Jan', sales: 4000, revenue: 2400 },
+      { name: 'Feb', sales: 3000, revenue: 1398 },
+      { name: 'Mar', sales: 2000, revenue: 9800 },
+      { name: 'Apr', sales: 2780, revenue: 3908 },
+      { name: 'May', sales: 1890, revenue: 4800 },
+      { name: 'Jun', sales: 2390, revenue: 3800 },
+    ];
+
+    const config: LayoutNode = {
+      type: 'container',
+      props: {
+        maxWidth: 'xl',
+        padding: 6,
+      },
+      children: [
+        {
+          type: 'flex',
+          props: {
+            direction: 'column',
+            gap: 6,
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Box',
+                componentProps: {
+                  children: <h2 className="text-2xl font-bold">Sales Dashboard</h2>,
+                },
+              },
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'LineChart',
+                componentProps: {
+                  data: chartData,
+                  lines: [
+                    { dataKey: 'sales', name: 'Sales' },
+                    { dataKey: 'revenue', name: 'Revenue' },
+                  ],
+                  height: 300,
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return <LayoutRenderer config={config} />;
+  },
+};

@@ -387,109 +387,139 @@ export const ECommerceProductGrid: Story = {
                       props: {
                         component: 'Box',
                         componentProps: {
-                          className: 'space-y-2',
+                          className: 'space-y-4',
                         },
                       },
                       children: [
                         {
-                          type: 'component',
+                          type: 'flex',
                           props: {
-                            component: 'Box',
+                            direction: 'column',
+                            gap: 2,
                           },
                           children: [
                             {
                               type: 'component',
                               props: {
-                                component: 'Box',
+                                component: 'Label',
                                 componentProps: {
-                                  children: <label className="text-sm font-medium">Category</label>,
+                                  children: 'Category',
                                 },
                               },
                             },
                             {
                               type: 'component',
                               props: {
-                                component: 'Box',
+                                component: 'Select',
                                 componentProps: {
-                                  className: 'mt-1 space-y-1',
+                                  options: [
+                                    { value: 'all', label: 'All Categories' },
+                                    { value: 'electronics', label: 'Electronics' },
+                                    { value: 'clothing', label: 'Clothing' },
+                                    { value: 'books', label: 'Books' },
+                                  ],
+                                  placeholder: 'Select category...',
                                 },
                               },
-                              children: [
-                                {
-                                  type: 'component',
-                                  props: {
-                                    component: 'Box',
-                                    componentProps: {
-                                      className: 'flex items-center',
-                                      children: (
-                                        <>
-                                          <input type="checkbox" className="mr-2" />
-                                          <span className="text-sm">Electronics</span>
-                                        </>
-                                      ),
-                                    },
-                                  },
-                                },
-                                {
-                                  type: 'component',
-                                  props: {
-                                    component: 'Box',
-                                    componentProps: {
-                                      className: 'flex items-center',
-                                      children: (
-                                        <>
-                                          <input type="checkbox" className="mr-2" />
-                                          <span className="text-sm">Clothing</span>
-                                        </>
-                                      ),
-                                    },
-                                  },
-                                },
-                              ],
                             },
                           ],
                         },
                         {
-                          type: 'component',
+                          type: 'flex',
                           props: {
-                            component: 'Box',
+                            direction: 'column',
+                            gap: 2,
                           },
                           children: [
                             {
                               type: 'component',
                               props: {
-                                component: 'Box',
+                                component: 'Label',
                                 componentProps: {
-                                  children: <label className="text-sm font-medium">Price Range</label>,
+                                  children: 'Price Range',
+                                },
+                              },
+                            },
+                            {
+                              type: 'component',
+                              props: {
+                                component: 'Slider',
+                                componentProps: {
+                                  defaultValue: [0, 1000],
+                                  max: 1000,
+                                  step: 10,
+                                },
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          type: 'flex',
+                          props: {
+                            direction: 'column',
+                            gap: 2,
+                          },
+                          children: [
+                            {
+                              type: 'component',
+                              props: {
+                                component: 'Label',
+                                componentProps: {
+                                  children: 'Options',
                                 },
                               },
                             },
                             {
                               type: 'flex',
                               props: {
+                                align: 'center',
                                 gap: 2,
-                                className: 'mt-1',
                               },
                               children: [
                                 {
                                   type: 'component',
                                   props: {
-                                    component: 'Input',
+                                    component: 'Checkbox',
                                     componentProps: {
-                                      placeholder: 'Min',
-                                      type: 'number',
-                                      className: 'w-full',
+                                      id: 'in-stock',
                                     },
                                   },
                                 },
                                 {
                                   type: 'component',
                                   props: {
-                                    component: 'Input',
+                                    component: 'Label',
                                     componentProps: {
-                                      placeholder: 'Max',
-                                      type: 'number',
-                                      className: 'w-full',
+                                      htmlFor: 'in-stock',
+                                      children: 'In Stock Only',
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                            {
+                              type: 'flex',
+                              props: {
+                                align: 'center',
+                                gap: 2,
+                              },
+                              children: [
+                                {
+                                  type: 'component',
+                                  props: {
+                                    component: 'Checkbox',
+                                    componentProps: {
+                                      id: 'on-sale',
+                                    },
+                                  },
+                                },
+                                {
+                                  type: 'component',
+                                  props: {
+                                    component: 'Label',
+                                    componentProps: {
+                                      htmlFor: 'on-sale',
+                                      children: 'On Sale',
                                     },
                                   },
                                 },
@@ -630,6 +660,21 @@ export const ECommerceProductGrid: Story = {
 
 export const AnalyticsDashboard: Story = {
   render: () => {
+    const chartData = [
+      { name: 'Jan', visitors: 4000, pageViews: 12000, bounceRate: 35 },
+      { name: 'Feb', visitors: 3000, pageViews: 9800, bounceRate: 32 },
+      { name: 'Mar', visitors: 5000, pageViews: 15000, bounceRate: 30 },
+      { name: 'Apr', visitors: 4500, pageViews: 13000, bounceRate: 28 },
+      { name: 'May', visitors: 6000, pageViews: 18000, bounceRate: 25 },
+      { name: 'Jun', visitors: 5500, pageViews: 16000, bounceRate: 27 },
+    ];
+
+    const pieData = [
+      { name: 'Desktop', value: 45 },
+      { name: 'Mobile', value: 35 },
+      { name: 'Tablet', value: 20 },
+    ];
+
     const config: LayoutNode = {
       type: 'flex',
       props: {
@@ -904,6 +949,151 @@ export const AnalyticsDashboard: Story = {
                       },
                     },
                   ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'grid',
+          props: {
+            columns: { default: 1, lg: 2 },
+            gap: 6,
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'Card',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardHeader',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardTitle',
+                        componentProps: {
+                          children: 'Visitor Trends',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardContent',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'LineChart',
+                        componentProps: {
+                          data: chartData,
+                          lines: [
+                            { dataKey: 'visitors', name: 'Visitors' },
+                            { dataKey: 'pageViews', name: 'Page Views' },
+                          ],
+                          height: 300,
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'Card',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardHeader',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'CardTitle',
+                        componentProps: {
+                          children: 'Device Distribution',
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardContent',
+                  },
+                  children: [
+                    {
+                      type: 'component',
+                      props: {
+                        component: 'PieChart',
+                        componentProps: {
+                          data: pieData,
+                          height: 300,
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Card',
+          },
+          children: [
+            {
+              type: 'component',
+              props: {
+                component: 'CardHeader',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'CardTitle',
+                    componentProps: {
+                      children: 'Bounce Rate Over Time',
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'component',
+              props: {
+                component: 'CardContent',
+              },
+              children: [
+                {
+                  type: 'component',
+                  props: {
+                    component: 'AreaChart',
+                    componentProps: {
+                      data: chartData,
+                      areas: [
+                        { dataKey: 'bounceRate', name: 'Bounce Rate' },
+                      ],
+                      height: 300,
+                    },
+                  },
                 },
               ],
             },

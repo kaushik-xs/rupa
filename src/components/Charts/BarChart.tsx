@@ -1,0 +1,81 @@
+import * as React from 'react';
+import {
+  BarChart as RechartsBarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import { cn } from '../../utils/cn';
+
+export interface BarChartData {
+  name: string;
+  [key: string]: string | number;
+}
+
+export interface BarChartConfig {
+  dataKey: string;
+  fill?: string;
+  name?: string;
+}
+
+export interface BarChartProps {
+  data: BarChartData[];
+  bars: BarChartConfig[];
+  xAxisKey?: string;
+  height?: number;
+  showGrid?: boolean;
+  showLegend?: boolean;
+  showTooltip?: boolean;
+  className?: string;
+  colors?: string[];
+}
+
+const defaultColors = [
+  'hsl(var(--primary))',
+  'hsl(var(--secondary))',
+  '#8884d8',
+  '#82ca9d',
+  '#ffc658',
+  '#ff7300',
+];
+
+const BarChart: React.FC<BarChartProps> = ({
+  data,
+  bars,
+  xAxisKey = 'name',
+  height = 300,
+  showGrid = true,
+  showLegend = true,
+  showTooltip = true,
+  className,
+  colors = defaultColors,
+}) => {
+  return (
+    <div className={cn('w-full', className)}>
+      <ResponsiveContainer width="100%" height={height}>
+        <RechartsBarChart data={data}>
+          {showGrid && <CartesianGrid strokeDasharray="3 3" />}
+          <XAxis dataKey={xAxisKey} />
+          <YAxis />
+          {showTooltip && <Tooltip />}
+          {showLegend && <Legend />}
+          {bars.map((bar, index) => (
+            <Bar
+              key={bar.dataKey}
+              dataKey={bar.dataKey}
+              fill={bar.fill || colors[index % colors.length]}
+              name={bar.name || bar.dataKey}
+            />
+          ))}
+        </RechartsBarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export { BarChart };
+
