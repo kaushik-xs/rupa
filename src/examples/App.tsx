@@ -50,7 +50,7 @@ export const App: React.FC = () => {
             </div>
             <div className="flex flex-wrap gap-4">
               <Button size="sm">Small</Button>
-              <Button size="md">Medium</Button>
+              <Button size="default">Default</Button>
               <Button size="lg">Large</Button>
             </div>
           </CardContent>
@@ -71,16 +71,16 @@ export const App: React.FC = () => {
                 <Input placeholder="Enter text..." />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Error Input</label>
-                <Input placeholder="Error state" error />
+                <label className="block text-sm font-medium mb-2">Disabled Input</label>
+                <Input placeholder="Disabled state" disabled />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Small Input</label>
-                <Input size="sm" placeholder="Small size" />
+                <label className="block text-sm font-medium mb-2">Email Input</label>
+                <Input type="email" placeholder="email@example.com" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Large Input</label>
-                <Input size="lg" placeholder="Large size" />
+                <label className="block text-sm font-medium mb-2">Password Input</label>
+                <Input type="password" placeholder="Enter password" />
               </div>
             </div>
           </CardContent>
@@ -105,7 +105,7 @@ export const App: React.FC = () => {
             </CardFooter>
           </Card>
 
-          <Card variant="outlined">
+          <Card className="border-2">
             <CardHeader>
               <CardTitle>Outlined Card</CardTitle>
               <CardDescription>
@@ -119,7 +119,7 @@ export const App: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card variant="elevated">
+          <Card className="shadow-lg">
             <CardHeader>
               <CardTitle>Elevated Card</CardTitle>
               <CardDescription>
@@ -139,21 +139,7 @@ export const App: React.FC = () => {
           <Alert>
             <AlertTitle>Default Alert</AlertTitle>
             <AlertDescription>
-              This is a default alert with an info icon.
-            </AlertDescription>
-          </Alert>
-
-          <Alert variant="success">
-            <AlertTitle>Success!</AlertTitle>
-            <AlertDescription>
-              Your action was completed successfully.
-            </AlertDescription>
-          </Alert>
-
-          <Alert variant="warning">
-            <AlertTitle>Warning</AlertTitle>
-            <AlertDescription>
-              Please review your input before proceeding.
+              This is a default alert message.
             </AlertDescription>
           </Alert>
 
@@ -179,9 +165,6 @@ export const App: React.FC = () => {
               <Badge variant="secondary">Secondary</Badge>
               <Badge variant="destructive">Destructive</Badge>
               <Badge variant="outline">Outline</Badge>
-              <Badge variant="success">Success</Badge>
-              <Badge size="sm">Small</Badge>
-              <Badge size="lg">Large</Badge>
             </div>
           </CardContent>
         </Card>
