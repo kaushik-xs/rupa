@@ -325,32 +325,34 @@ export const RenderNode: React.FC<RenderNodeProps> = ({ node, context = {} }) =>
 
   // Handle data source loading
   React.useEffect(() => {
-    if (node.dataSource?.api) {
+    const dataSource = node.dataSource;
+    const api = dataSource?.api;
+    if (api) {
       const loadData = async () => {
-        const loadingKey = node.dataSource.api?.loadingState || `${node.id}_loading`;
-        const dataKey = node.dataSource.api?.dataState || `${node.id}_data`;
-        const errorKey = node.dataSource.api?.errorState || `${node.id}_error`;
+        const loadingKey = api.loadingState || `${node.id}_loading`;
+        const dataKey = api.dataState || `${node.id}_data`;
+        const errorKey = api.errorState || `${node.id}_error`;
 
         try {
           enhancedContext.setContext?.(loadingKey, true);
           enhancedContext.setContext?.(errorKey, null);
 
-          const response = await executeApiAction(node.dataSource.api, enhancedContext);
+          const response = await executeApiAction(api, enhancedContext);
           
           enhancedContext.setContext?.(dataKey, response.data);
           enhancedContext.setContext?.(loadingKey, false);
 
           // Call onSuccess callback
-          if (node.dataSource.api.onSuccess) {
-            await node.dataSource.api.onSuccess(response.data, enhancedContext);
+          if (api.onSuccess) {
+            await api.onSuccess(response.data, enhancedContext);
           }
         } catch (error) {
           enhancedContext.setContext?.(loadingKey, false);
           enhancedContext.setContext?.(errorKey, error);
 
           // Call onError callback
-          if (node.dataSource.api.onError) {
-            await node.dataSource.api.onError(error, enhancedContext);
+          if (api.onError) {
+            await api.onError(error, enhancedContext);
           }
         }
       };
@@ -358,11 +360,11 @@ export const RenderNode: React.FC<RenderNodeProps> = ({ node, context = {} }) =>
       loadData();
 
       // Handle polling
-      if (node.dataSource.polling) {
-        const interval = node.dataSource.polling.interval;
-        const isEnabled = typeof node.dataSource.polling.enabled === 'function'
-          ? node.dataSource.polling.enabled(enhancedContext)
-          : node.dataSource.polling.enabled !== false;
+      if (dataSource.polling) {
+        const interval = dataSource.polling.interval;
+        const isEnabled = typeof dataSource.polling.enabled === 'function'
+          ? dataSource.polling.enabled(enhancedContext)
+          : dataSource.polling.enabled !== false;
 
         if (isEnabled) {
           const pollInterval = setInterval(loadData, interval);
@@ -371,7 +373,7 @@ export const RenderNode: React.FC<RenderNodeProps> = ({ node, context = {} }) =>
       }
 
       // Handle refreshOn dependencies
-      if (node.dataSource.refreshOn && node.dataSource.refreshOn.length > 0) {
+      if (dataSource.refreshOn && dataSource.refreshOn.length > 0) {
         // This will be handled by the dependency array in useEffect
       }
     }

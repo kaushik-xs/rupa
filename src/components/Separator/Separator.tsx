@@ -16,7 +16,7 @@ const separatorVariants = cva('shrink-0 bg-border', {
 });
 
 export interface SeparatorProps
-  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
+  extends Omit<React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>, 'orientation'>,
     VariantProps<typeof separatorVariants> {}
 
 const Separator = React.forwardRef<
@@ -26,15 +26,18 @@ const Separator = React.forwardRef<
   (
     { className, orientation = 'horizontal', decorative = true, ...props },
     ref
-  ) => (
-    <SeparatorPrimitive.Root
-      ref={ref}
-      decorative={decorative}
-      orientation={orientation}
-      className={cn(separatorVariants({ orientation }), className)}
-      {...props}
-    />
-  )
+  ) => {
+    const orientationValue = orientation ?? 'horizontal';
+    return (
+      <SeparatorPrimitive.Root
+        ref={ref}
+        decorative={decorative}
+        orientation={orientationValue}
+        className={cn(separatorVariants({ orientation: orientationValue }), className)}
+        {...props}
+      />
+    );
+  }
 );
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 

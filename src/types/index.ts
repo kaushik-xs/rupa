@@ -67,4 +67,20 @@ export type ComponentVariant = 'default' | 'destructive' | 'outline' | 'secondar
 export type ComponentSize = 'sm' | 'md' | 'lg';
 
 // Layout types
-export * from './layout';
+// Export all layout types except LayoutContext (exported from layout-renderer with extensions)
+export type {
+  Breakpoint,
+  ResponsiveValue,
+  SpacingValue,
+  LayoutNode,
+  LayoutProps,
+  ComponentLayoutNode,
+  LayoutConfig,
+  LayoutRegistryEntry,
+  WidgetRegistryEntry,
+  DataSourceConfig,
+  OnLoadConfig,
+  OnLoadApiCall,
+  OnLoadResult,
+  OnLoadError,
+} from './layout';
