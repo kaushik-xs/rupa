@@ -9,6 +9,7 @@ import './core/register-layouts';
 export * from './core/register-layouts';
 // Import register-components to auto-register all components
 import './core/register-components';
+export * from './core/register-components';
 export * from './utils/cn';
 export * from './utils/tailwind';
 export * from './utils/api';

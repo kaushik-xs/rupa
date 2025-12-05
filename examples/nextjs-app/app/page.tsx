@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { LayoutRenderer } from '@kaushik-xs/rupa';
+import { LayoutRenderer, registerAllComponents } from '@kaushik-xs/rupa';
 import type { LayoutNode } from '@kaushik-xs/rupa';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge } from '@kaushik-xs/rupa';
 
-// Import to register all layouts and components (auto-registered via main package)
-import '@kaushik-xs/rupa';
+// Ensure components are registered (explicit registration for Next.js)
+registerAllComponents();
 
 const examplePages = [
   {

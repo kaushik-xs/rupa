@@ -12,6 +12,18 @@ import {
   columnsToClass,
   shadowToClass,
 } from '../utils/tailwind';
+// Ensure components are registered
+import { registerAllComponents } from './register-components';
+import { registerAllLayouts } from './register-layouts';
+
+// Ensure registration happens (in case side effects didn't run in Next.js)
+// Only register if not already registered (check for a common component)
+if (!widgetRegistry.has('Button')) {
+  registerAllComponents();
+}
+if (!layoutRegistry.has('container')) {
+  registerAllLayouts();
+}
 
 /**
  * Context for layout rendering with state management
