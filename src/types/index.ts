@@ -48,6 +48,7 @@ export interface RendererConfig {
   target: 'dom' | 'react' | 'vue' | 'svelte';
   theme?: Partial<Theme>;
   prefix?: string;
+  context?: Record<string, any>;
 }
 
 export interface Renderer {
@@ -64,3 +65,6 @@ export interface ComponentNode {
 
 export type ComponentVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
 export type ComponentSize = 'sm' | 'md' | 'lg';
+
+// Layout types
+export * from './layout';

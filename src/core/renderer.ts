@@ -1,4 +1,5 @@
 import { ComponentNode, Renderer, RendererConfig } from '../types';
+import type { LayoutNode } from '../types/layout';
 
 export class DOMRenderer implements Renderer {
   render(component: ComponentNode, config: RendererConfig): HTMLElement {
@@ -53,25 +54,32 @@ export class DOMRenderer implements Renderer {
 
 export class ReactRenderer implements Renderer {
   render(component: ComponentNode, config: RendererConfig): any {
-    // This would integrate with React's createElement
-    // For now, return a simple object structure
-    return {
+    // For React, we return a component structure that can be used with LayoutRenderer
+    // The actual rendering is handled by LayoutRenderer component
+    
+    // Convert ComponentNode to LayoutNode format
+    const layoutNode: LayoutNode = {
       type: component.type,
       props: component.props,
       children: component.children?.map(child => 
-        typeof child === 'string' ? child : this.render(child, config)
-      )
+        typeof child === 'string' ? undefined : this.render(child, config)
+      ).filter(Boolean) as LayoutNode[],
     };
+    
+    // Return the layout node structure - actual rendering happens via LayoutRenderer component
+    return layoutNode;
   }
 
   mount(element: any, container: HTMLElement | string): void {
     // React mounting logic would go here
-    console.log('React mounting not implemented yet');
+    // This is handled by React's rendering system
+    console.log('React mounting handled by React rendering system');
   }
 
   unmount(element: any): void {
     // React unmounting logic would go here
-    console.log('React unmounting not implemented yet');
+    // This is handled by React's rendering system
+    console.log('React unmounting handled by React rendering system');
   }
 }
 

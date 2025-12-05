@@ -16,3 +16,6 @@ export {
 } from './Modal/Modal';
 export { Alert, AlertTitle, AlertDescription } from './Alert/Alert';
 export { Badge, badgeVariants } from './Badge/Badge';
+
+// Layout components
+export * from './layouts';
