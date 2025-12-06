@@ -1,4 +1,5 @@
 export { Button, buttonVariants } from './Button/Button';
+export { ButtonGroup, buttonGroupVariants } from './ButtonGroup/ButtonGroup';
 export { Input } from './Input/Input';
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './Card/Card';
 export { 

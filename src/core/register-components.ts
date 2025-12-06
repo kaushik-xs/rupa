@@ -1,6 +1,7 @@
 import { widgetRegistry } from './registry';
 import {
   Button,
+  ButtonGroup,
   Card,
   CardHeader,
   CardTitle,
@@ -111,6 +112,7 @@ import { Box } from '../components/layouts';
 export function registerAllComponents() {
   // Basic Components
   widgetRegistry.register('Button', { component: Button });
+  widgetRegistry.register('ButtonGroup', { component: ButtonGroup });
   widgetRegistry.register('Input', { component: Input });
   widgetRegistry.register('Badge', { component: Badge });
 
