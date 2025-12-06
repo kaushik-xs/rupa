@@ -1,0 +1,151 @@
+{
+  "type": "component",
+  "props": {
+    "component": "Form",
+    "componentProps": {
+      "layout": {
+        "type": "sections",
+        "sections": [
+          {
+            "id": "personal",
+            "title": "Personal Information",
+            "description": "Please provide your basic information",
+            "fields": [
+              {
+                "name": "firstName",
+                "type": "text",
+                "label": "First Name",
+                "placeholder": "John",
+                "validation": {
+                  "required": "First name is required",
+                  "minLength": {
+                    "value": 2,
+                    "message": "First name must be at least 2 characters"
+                  }
+                }
+              },
+              {
+                "name": "lastName",
+                "type": "text",
+                "label": "Last Name",
+                "placeholder": "Doe",
+                "validation": {
+                  "required": "Last name is required"
+                }
+              },
+              {
+                "name": "email",
+                "type": "email",
+                "label": "Email Address",
+                "placeholder": "john.doe@example.com",
+                "description": "We'll use this for important notifications",
+                "validation": {
+                  "required": "Email is required",
+                  "email": "Please enter a valid email address"
+                }
+              },
+              {
+                "name": "phone",
+                "type": "tel",
+                "label": "Phone Number",
+                "placeholder": "+1 (555) 123-4567"
+              }
+            ],
+            "divider": true
+          },
+          {
+            "id": "address",
+            "title": "Address",
+            "description": "Where can we reach you?",
+            "layout": "two-column",
+            "fields": [
+              {
+                "name": "street",
+                "type": "text",
+                "label": "Street Address",
+                "colSpan": 2
+              },
+              {
+                "name": "city",
+                "type": "text",
+                "label": "City",
+                "validation": {
+                  "required": true
+                }
+              },
+              {
+                "name": "state",
+                "type": "text",
+                "label": "State/Province"
+              },
+              {
+                "name": "zipCode",
+                "type": "text",
+                "label": "ZIP/Postal Code",
+                "validation": {
+                  "pattern": {
+                    "value": "^[0-9]{5}(-[0-9]{4})?$",
+                    "message": "Please enter a valid ZIP code"
+                  }
+                }
+              },
+              {
+                "name": "country",
+                "type": "select",
+                "label": "Country",
+                "options": [
+                  { "label": "United States", "value": "us" },
+                  { "label": "Canada", "value": "ca" },
+                  { "label": "United Kingdom", "value": "uk" },
+                  { "label": "Australia", "value": "au" }
+                ],
+                "validation": {
+                  "required": true
+                }
+              }
+            ],
+            "divider": true
+          },
+          {
+            "id": "preferences",
+            "title": "Preferences",
+            "fields": [
+              {
+                "name": "communicationPreference",
+                "type": "radio",
+                "label": "Preferred Contact Method",
+                "options": [
+                  { "label": "Email", "value": "email" },
+                  { "label": "Phone", "value": "phone" },
+                  { "label": "SMS", "value": "sms" }
+                ],
+                "defaultValue": "email"
+              },
+              {
+                "name": "newsletter",
+                "type": "checkbox",
+                "label": "Subscribe to our newsletter"
+              },
+              {
+                "name": "notifications",
+                "type": "switch",
+                "label": "Enable push notifications"
+              }
+            ]
+          }
+        ]
+      },
+      "submitText": "Complete Registration",
+      "showCancel": true,
+      "cancelText": "Cancel",
+      "onSubmit": {
+        "method": "POST",
+        "url": "https://api.example.com/users/register",
+        "successMessage": "Registration completed successfully!",
+        "errorMessage": "Registration failed. Please try again.",
+        "resetOnSuccess": true
+      }
+    }
+  }
+}
+

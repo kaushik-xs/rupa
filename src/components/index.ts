@@ -27,6 +27,9 @@ export { RadioGroup, RadioGroupItem } from './RadioGroup/RadioGroup';
 export { Switch } from './Switch/Switch';
 export { Slider } from './Slider/Slider';
 export { Progress } from './Progress/Progress';
+export { Form } from './Form/Form';
+export { FormField } from './Form/FormField';
+export { FormLayout } from './Form/FormLayout';
 
 // Display components
 export { Spinner } from './Spinner/Spinner';

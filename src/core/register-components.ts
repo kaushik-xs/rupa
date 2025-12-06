@@ -110,6 +110,7 @@ import {
   AreaChart,
   RadarChart,
   ComposedChart,
+  Form,
 } from '../components';
 import { Box } from '../components/layouts';
 
@@ -153,6 +154,7 @@ export function registerAllComponents() {
   widgetRegistry.register('Checkbox', { component: Checkbox });
   widgetRegistry.register('RadioGroup', { component: RadioGroup });
   widgetRegistry.register('RadioGroupItem', { component: RadioGroupItem });
+  widgetRegistry.register('Form', { component: Form });
   widgetRegistry.register('Switch', { component: Switch });
   widgetRegistry.register('Slider', { component: Slider });
   widgetRegistry.register('Progress', { component: Progress });
