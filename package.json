@@ -1,6 +1,6 @@
 {
   "name": "@kaushik91/rupa",
-  "version": "0.0.1-alpha-6",
+  "version": "0.0.1-alpha-7",
   "description": "A modern UI library with flexible rendering engine and Tailwind CSS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

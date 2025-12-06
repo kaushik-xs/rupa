@@ -223,10 +223,13 @@ const SideNavigation = React.forwardRef<HTMLDivElement, SideNavigationProps>(
                 ? 'relative flex-shrink-0'
                 : cn(
                     'absolute left-full top-0 shadow-lg z-50',
-                    activeSecondaryMenuId ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'
+                    activeSecondaryMenuId ? 'translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'
                   )
             )}
-            style={{ width: `${secondaryMenuWidth}px` }}
+            style={{ 
+              width: `${secondaryMenuWidth}px`,
+              ...(isPinned || activeSecondaryMenuId ? { opacity: 1 } : {})
+            }}
             onMouseEnter={handleSecondaryMenuMouseEnter}
             onMouseLeave={handleSecondaryMenuMouseLeave}
           >
