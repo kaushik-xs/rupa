@@ -54,6 +54,8 @@ export {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 } from './Breadcrumb/Breadcrumb';
+export { SideNavigation, sideNavigationVariants } from './SideNavigation/SideNavigation';
+export type { NavigationItem, SecondaryMenuItem, SideNavigationProps } from './SideNavigation/SideNavigation';
 export {
   Sheet,
   SheetPortal,
