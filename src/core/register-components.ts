@@ -52,6 +52,13 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
   Sheet,
   SheetTrigger,
   SheetClose,
@@ -173,6 +180,13 @@ export function registerAllComponents() {
   widgetRegistry.register('AccordionItem', { component: AccordionItem });
   widgetRegistry.register('AccordionTrigger', { component: AccordionTrigger });
   widgetRegistry.register('AccordionContent', { component: AccordionContent });
+  widgetRegistry.register('Breadcrumb', { component: Breadcrumb });
+  widgetRegistry.register('BreadcrumbList', { component: BreadcrumbList });
+  widgetRegistry.register('BreadcrumbItem', { component: BreadcrumbItem });
+  widgetRegistry.register('BreadcrumbLink', { component: BreadcrumbLink });
+  widgetRegistry.register('BreadcrumbPage', { component: BreadcrumbPage });
+  widgetRegistry.register('BreadcrumbSeparator', { component: BreadcrumbSeparator });
+  widgetRegistry.register('BreadcrumbEllipsis', { component: BreadcrumbEllipsis });
   widgetRegistry.register('Sheet', { component: Sheet });
   widgetRegistry.register('SheetTrigger', { component: SheetTrigger });
   widgetRegistry.register('SheetClose', { component: SheetClose });

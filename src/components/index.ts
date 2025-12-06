@@ -46,6 +46,15 @@ export {
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs/Tabs';
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './Accordion/Accordion';
 export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from './Breadcrumb/Breadcrumb';
+export {
   Sheet,
   SheetPortal,
   SheetOverlay,
