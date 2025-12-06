@@ -63,6 +63,12 @@ const examplePages = [
     href: '/layouts',
     features: ['All Layouts', 'Responsive', 'Flexible', 'Comprehensive'],
   },
+  {
+    title: 'Components',
+    description: 'Comprehensive showcase of all UI components',
+    href: '/components',
+    features: ['Breadcrumb', 'ButtonGroup', 'Command', 'Alert', 'Badge'],
+  },
 ];
 
 export default function Home() {

@@ -25,6 +25,63 @@ export default function ProfilePage() {
           {
             type: 'component',
             props: {
+              component: 'Breadcrumb',
+            },
+            children: [
+              {
+                type: 'component',
+                props: {
+                  component: 'BreadcrumbList',
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbItem',
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbLink',
+                          componentProps: {
+                            href: '/',
+                            children: 'Home',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbSeparator',
+                    },
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbItem',
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbPage',
+                          componentProps: {
+                            children: 'Profile',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'component',
+            props: {
               component: 'Box',
               componentProps: {
                 children: <h1 className="text-3xl font-bold">User Profile</h1>,

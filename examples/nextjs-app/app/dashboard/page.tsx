@@ -23,38 +23,104 @@ export default function DashboardPage() {
           {
             type: 'flex',
             props: {
-              justify: 'between',
-              align: 'center',
+              direction: 'column',
+              gap: 4,
             },
             children: [
               {
                 type: 'component',
                 props: {
-                  component: 'Box',
-                  componentProps: {
-                    children: <h1 className="text-2xl font-bold">Admin Dashboard</h1>,
-                  },
-                },
-              },
-              {
-                type: 'flex',
-                props: {
-                  gap: 2,
+                  component: 'Breadcrumb',
                 },
                 children: [
                   {
                     type: 'component',
                     props: {
-                      component: 'Button',
-                      componentProps: { variant: 'outline', size: 'sm', children: 'Settings' },
+                      component: 'BreadcrumbList',
                     },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbItem',
+                        },
+                        children: [
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'BreadcrumbLink',
+                              componentProps: {
+                                href: '/',
+                                children: 'Home',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbSeparator',
+                        },
+                      },
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbItem',
+                        },
+                        children: [
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'BreadcrumbPage',
+                              componentProps: {
+                                children: 'Dashboard',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    ],
                   },
+                ],
+              },
+              {
+                type: 'flex',
+                props: {
+                  justify: 'between',
+                  align: 'center',
+                },
+                children: [
                   {
                     type: 'component',
                     props: {
-                      component: 'Button',
-                      componentProps: { size: 'sm', children: 'John Doe' },
+                      component: 'Box',
+                      componentProps: {
+                        children: <h1 className="text-2xl font-bold">Admin Dashboard</h1>,
+                      },
                     },
+                  },
+                  {
+                    type: 'flex',
+                    props: {
+                      gap: 2,
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'Button',
+                          componentProps: { variant: 'outline', size: 'sm', children: 'Settings' },
+                        },
+                      },
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'Button',
+                          componentProps: { size: 'sm', children: 'John Doe' },
+                        },
+                      },
+                    ],
                   },
                 ],
               },

@@ -16,6 +16,119 @@ export default function ECommercePage() {
     },
     children: [
       {
+        type: 'flex',
+        props: {
+          direction: 'column',
+          gap: 4,
+        },
+        children: [
+          {
+            type: 'component',
+            props: {
+              component: 'Breadcrumb',
+            },
+            children: [
+              {
+                type: 'component',
+                props: {
+                  component: 'BreadcrumbList',
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbItem',
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbLink',
+                          componentProps: {
+                            href: '/',
+                            children: 'Home',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbSeparator',
+                    },
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbItem',
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbPage',
+                          componentProps: {
+                            children: 'E-Commerce',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'flex',
+            props: {
+              justify: 'between',
+              align: 'center',
+            },
+            children: [
+              {
+                type: 'component',
+                props: {
+                  component: 'Box',
+                  componentProps: {
+                    children: <h1 className="text-3xl font-bold">E-Commerce Store</h1>,
+                  },
+                },
+              },
+              {
+                type: 'component',
+                props: {
+                  component: 'ButtonGroup',
+                  componentProps: {
+                    variant: 'outline',
+                  },
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'Button',
+                      componentProps: {
+                        children: 'Grid',
+                      },
+                    },
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'Button',
+                      componentProps: {
+                        children: 'List',
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
         type: 'sidebarLayout',
         props: {
           sidebarWidth: 280,
@@ -323,7 +436,7 @@ export default function ECommercePage() {
                                     },
                                   },
                                 },
-                                { ...(product.onSale && {
+                                ...(product.onSale ? [{
                                   type: 'component',
                                   props: {
                                     component: 'Badge',
@@ -332,7 +445,7 @@ export default function ECommercePage() {
                                       children: 'On Sale',
                                     },
                                   },
-                                })},
+                                }] : []),
                               ],
                             },
                             {

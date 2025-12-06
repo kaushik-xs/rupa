@@ -17,6 +17,63 @@ export default function AnalyticsPage() {
     },
     children: [
       {
+        type: 'component',
+        props: {
+          component: 'Breadcrumb',
+        },
+        children: [
+          {
+            type: 'component',
+            props: {
+              component: 'BreadcrumbList',
+            },
+            children: [
+              {
+                type: 'component',
+                props: {
+                  component: 'BreadcrumbItem',
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbLink',
+                      componentProps: {
+                        href: '/',
+                        children: 'Home',
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                type: 'component',
+                props: {
+                  component: 'BreadcrumbSeparator',
+                },
+              },
+              {
+                type: 'component',
+                props: {
+                  component: 'BreadcrumbItem',
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbPage',
+                      componentProps: {
+                        children: 'Analytics',
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
         type: 'flex',
         props: {
           justify: 'between',

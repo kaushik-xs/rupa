@@ -232,7 +232,7 @@ export default function LayoutsPage() {
                   {
                     type: 'splitPane',
                     props: {
-                      direction: 'horizontal',
+                      direction: 'horizontal' as any,
                       defaultSize: 50,
                     },
                     children: [

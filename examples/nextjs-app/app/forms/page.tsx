@@ -24,11 +24,197 @@ export default function FormsPage() {
           {
             type: 'component',
             props: {
+              component: 'Breadcrumb',
+            },
+            children: [
+              {
+                type: 'component',
+                props: {
+                  component: 'BreadcrumbList',
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbItem',
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbLink',
+                          componentProps: {
+                            href: '/',
+                            children: 'Home',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbSeparator',
+                    },
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'BreadcrumbItem',
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'BreadcrumbPage',
+                          componentProps: {
+                            children: 'Forms',
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'component',
+            props: {
               component: 'Box',
               componentProps: {
                 children: <h1 className="text-3xl font-bold">Forms & Inputs</h1>,
               },
             },
+          },
+          {
+            type: 'component',
+            props: {
+              component: 'Card',
+            },
+            children: [
+              {
+                type: 'component',
+                props: {
+                  component: 'CardHeader',
+                },
+                children: [
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'CardTitle',
+                      componentProps: {
+                        children: 'Button Groups',
+                      },
+                    },
+                  },
+                  {
+                    type: 'component',
+                    props: {
+                      component: 'CardDescription',
+                      componentProps: {
+                        children: 'ButtonGroup component for related actions',
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                type: 'component',
+                props: {
+                  component: 'CardContent',
+                },
+                children: [
+                  {
+                    type: 'flex',
+                    props: {
+                      direction: 'column',
+                      gap: 4,
+                    },
+                    children: [
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'ButtonGroup',
+                          componentProps: {
+                            variant: 'default',
+                          },
+                        },
+                        children: [
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                children: 'Save',
+                              },
+                            },
+                          },
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                variant: 'outline',
+                                children: 'Cancel',
+                              },
+                            },
+                          },
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                variant: 'outline',
+                                children: 'Delete',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        type: 'component',
+                        props: {
+                          component: 'ButtonGroup',
+                          componentProps: {
+                            variant: 'outline',
+                          },
+                        },
+                        children: [
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                children: 'Edit',
+                              },
+                            },
+                          },
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                children: 'View',
+                              },
+                            },
+                          },
+                          {
+                            type: 'component',
+                            props: {
+                              component: 'Button',
+                              componentProps: {
+                                children: 'Share',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
           {
             type: 'component',
