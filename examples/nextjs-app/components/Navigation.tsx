@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button } from '@kaushik-xs/rupa';
+import { Button } from '@kaushik91/rupa';
 
 const navItems = [
   { href: '/', label: 'Home' },

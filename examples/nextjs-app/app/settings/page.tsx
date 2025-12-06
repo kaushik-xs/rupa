@@ -1,10 +1,10 @@
 'use client';
 
-import { LayoutRenderer } from '@kaushik-xs/rupa';
-import type { LayoutNode } from '@kaushik-xs/rupa';
+import { LayoutRenderer } from '@kaushik91/rupa';
+import type { LayoutNode } from '@kaushik91/rupa';
 
 // Import to register all layouts and components (auto-registered via main package)
-import '@kaushik-xs/rupa';
+import '@kaushik91/rupa';
 import { settingsCategories } from '@/lib/data';
 
 export default function SettingsPage() {

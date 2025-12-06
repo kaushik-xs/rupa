@@ -1,6 +1,6 @@
 {
-  "name": "@kaushik-xs/rupa",
-  "version": "0.0.1-alpha-4",
+  "name": "@kaushik91/rupa",
+  "version": "0.0.1-alpha-5",
   "description": "A modern UI library with flexible rendering engine and Tailwind CSS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,6 +30,7 @@
     "@storybook/react": "^8.6.14",
     "@storybook/react-vite": "^8.6.14",
     "@storybook/test": "^8.6.14",
+    "@types/chai": "^5.2.3",
     "@types/node": "^20.0.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -80,6 +81,6 @@
     "README.md"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   }
 }

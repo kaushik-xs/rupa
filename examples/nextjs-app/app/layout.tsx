@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@kaushik-xs/rupa/dist/styles.css";
+import "@kaushik91/rupa/dist/styles.css";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 
