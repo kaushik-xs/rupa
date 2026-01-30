@@ -111,6 +111,7 @@ import {
   RadarChart,
   ComposedChart,
   Form,
+  DataTable,
 } from '../components';
 import { Box } from '../components/layouts';
 
@@ -247,6 +248,9 @@ export function registerAllComponents() {
 
   // Layout Components (for use as widgets)
   widgetRegistry.register('Box', { component: Box });
+
+  // DataTable (supports getRowIdKey for JSON config; data/columns from componentProps or context)
+  widgetRegistry.register('DataTable', { component: DataTable });
 }
 
 // Auto-register on import

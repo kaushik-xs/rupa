@@ -463,6 +463,53 @@ export const RenderNode: React.FC<RenderNodeProps> = ({ node, context = {} }) =>
     // Apply template variable substitution to all props
     componentProps = substituteTemplateVariables(componentProps, enhancedContext);
 
+    // DataTable: convert JSON rowActions (setContextKey or setContext object) into real onClick handlers
+    if (componentName === 'DataTable' && Array.isArray(componentProps.rowActions)) {
+      const rawActions = componentProps.rowActions as Array<{
+        id: string;
+        label: string;
+        setContextKey?: string;
+        setContextValuePath?: string;
+        setContext?: Record<string, unknown | 'row'>;
+        variant?: string;
+      }>;
+      if (rawActions.some((a) => a.setContextKey || a.setContext)) {
+        componentProps.rowActions = rawActions.map((a) => ({
+          id: a.id,
+          label: a.label,
+          variant: a.variant,
+          onClick: (row: unknown) => {
+            if (a.setContext) {
+              Object.entries(a.setContext).forEach(([key, val]) => {
+                enhancedContext.setContext?.(key, val === 'row' ? row : val);
+              });
+            } else if (a.setContextKey) {
+              const value = a.setContextValuePath === 'row' ? row : (row as Record<string, unknown>)[a.setContextValuePath as string];
+              enhancedContext.setContext?.(a.setContextKey, value);
+            }
+          },
+        }));
+      }
+    }
+
+    // Sheet: inject onOpenChange when closeContextKeys is set (JSON config)
+    if (componentName === 'Sheet' && Array.isArray(componentProps.closeContextKeys)) {
+      const keys = componentProps.closeContextKeys as string[];
+      const origOnOpenChange = componentProps.onOpenChange;
+      componentProps.onOpenChange = (open: boolean) => {
+        if (!open) keys.forEach((key) => enhancedContext.setContext?.(key, null));
+        (origOnOpenChange as ((open: boolean) => void) | undefined)?.(open);
+      };
+      delete componentProps.closeContextKeys;
+    }
+
+    // Tabs: inject onValueChange when onValueChangeContextKey is set (JSON config)
+    if (componentName === 'Tabs' && typeof componentProps.onValueChangeContextKey === 'string') {
+      const key = componentProps.onValueChangeContextKey as string;
+      componentProps.onValueChange = (value: string) => enhancedContext.setContext?.(key, value);
+      delete componentProps.onValueChangeContextKey;
+    }
+
     // Handle API actions for buttons and interactive components
     if (componentProps.apiAction) {
       const action = componentProps.apiAction as ApiActionConfig;

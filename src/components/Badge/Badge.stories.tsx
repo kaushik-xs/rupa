@@ -80,6 +80,36 @@ export const Variants: Story = {
             },
           },
         },
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'success',
+              children: 'Success',
+            },
+          },
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'warning',
+              children: 'Warning',
+            },
+          },
+        },
+        {
+          type: 'component',
+          props: {
+            component: 'Badge',
+            componentProps: {
+              variant: 'info',
+              children: 'Info',
+            },
+          },
+        },
       ],
     };
     return <LayoutRenderer config={config} />;

@@ -46,6 +46,26 @@ export {
   TableCell,
   TableCaption,
 } from './Table/Table';
+export { DataTable, renderCellFormat, defaultCellRenderers, getCellRenderers } from './DataTable';
+export type {
+  DataTableColumn,
+  DataTableCellRenderer,
+  DataTableCellRendererConfig,
+  DataTableConfigurableRenderer,
+  DataTableFilterConfig,
+  DataTableSortState,
+  DataTableBulkAction,
+  DataTableRowAction,
+  DataTablePaginationConfig,
+  DataTableProps,
+  DataTableCellFormat,
+  DataTableFormatOptions,
+  DataTableFormatBadgeOptions,
+  DataTableFormatNumberOptions,
+  DataTableFormatCurrencyOptions,
+  DataTableFormatDateOptions,
+  DataTableBadgeVariant,
+} from './DataTable';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs/Tabs';
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './Accordion/Accordion';
 export {
