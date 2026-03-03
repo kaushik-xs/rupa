@@ -17,7 +17,13 @@ A modern, flexible UI library with a powerful rendering engine and Tailwind CSS 
 ## Installation
 
 ```bash
-npm install rupa-ui
+npm install @kaushik91/rupa
+```
+
+For use with [json-render](https://github.com/kaushiksundar/json-render), also install:
+
+```bash
+npm install @json-render/core @json-render/react zod
 ```
 
 ## Quick Start
@@ -26,7 +32,7 @@ npm install rupa-ui
 
 ```tsx
 import React from 'react';
-import { Button, Card, CardHeader, CardTitle, CardContent } from 'rupa-ui';
+import { Button, Card, CardHeader, CardTitle, CardContent } from '@kaushik91/rupa';
 
 function App() {
   return (
@@ -45,7 +51,7 @@ function App() {
 ### DOM Usage
 
 ```typescript
-import { DOMRenderer, RendererFactory } from 'rupa-ui';
+import { DOMRenderer, RendererFactory } from '@kaushik91/rupa';
 
 const renderer = RendererFactory.create('dom');
 const component = {
@@ -62,7 +68,7 @@ renderer.mount(element, '#app');
 ### Button
 
 ```tsx
-import { Button } from 'rupa-ui';
+import { Button } from '@kaushik91/rupa';
 
 // Variants
 <Button>Default</Button>
@@ -81,7 +87,7 @@ import { Button } from 'rupa-ui';
 ### Input
 
 ```tsx
-import { Input } from 'rupa-ui';
+import { Input } from '@kaushik91/rupa';
 
 <Input placeholder="Enter text..." />
 <Input size="sm" placeholder="Small input" />
@@ -91,7 +97,7 @@ import { Input } from 'rupa-ui';
 ### Card
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from 'rupa-ui';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@kaushik91/rupa';
 
 <Card>
   <CardHeader>
@@ -110,7 +116,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 ### Modal
 
 ```tsx
-import { Modal, Button } from 'rupa-ui';
+import { Modal, Button } from '@kaushik91/rupa';
 
 function MyComponent() {
   const [isOpen, setIsOpen] = useState(false);
@@ -134,7 +140,7 @@ function MyComponent() {
 ### Alert
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from 'rupa-ui';
+import { Alert, AlertTitle, AlertDescription } from '@kaushik91/rupa';
 
 <Alert>
   <AlertTitle>Info</AlertTitle>
@@ -150,7 +156,7 @@ import { Alert, AlertTitle, AlertDescription } from 'rupa-ui';
 ### Badge
 
 ```tsx
-import { Badge } from 'rupa-ui';
+import { Badge } from '@kaushik91/rupa';
 
 <Badge>Default</Badge>
 <Badge variant="secondary">Secondary</Badge>
@@ -165,7 +171,7 @@ Rupa includes a flexible rendering engine that supports multiple targets:
 ### DOM Renderer
 
 ```typescript
-import { DOMRenderer, RendererFactory } from 'rupa-ui';
+import { DOMRenderer, RendererFactory } from '@kaushik91/rupa';
 
 const renderer = RendererFactory.create('dom');
 const element = renderer.render(component, { target: 'dom' });
@@ -175,18 +181,103 @@ renderer.mount(element, '#app');
 ### React Renderer
 
 ```typescript
-import { ReactRenderer, RendererFactory } from 'rupa-ui';
+import { ReactRenderer, RendererFactory } from '@kaushik91/rupa';
 
 const renderer = RendererFactory.create('react');
 const element = renderer.render(component, { target: 'react' });
 ```
+
+## Component definitions and Rupa components (json-render)
+
+Rupa ships two artifacts for use with [json-render](https://github.com/kaushiksundar/json-render):
+
+- **`rupaComponentDefinitions`** — Zod-based **definitions** (props schema, slots, description) for each component. Used with `defineCatalog` from `@json-render/core` so the renderer knows how to validate and describe components.
+- **`rupaComponents`** — **React implementations** for those components. Each receives `{ props, children?, emit }` from the json-render runtime. Used with `defineRegistry` from `@json-render/react` to map component names to actual React components.
+
+### Definitions (`rupaComponentDefinitions`)
+
+Defined in `rupa-component-definitions.ts`. Each entry has:
+
+- **`props`** — A Zod schema for the component’s props (e.g. `label`, `variant`, `className`).
+- **`slots`** — Optional list of slot names (e.g. `['default']`) for children.
+- **`description`** — Short description for tooling or AI.
+
+Included definitions cover layout (Box, Stack, Flex, Grid, Container, Spacer), buttons (Button, ButtonGroup), cards (Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter), forms (Input, Label, Textarea, Checkbox, Switch, Slider, Select, RadioGroup), feedback (Badge, Alert, Spinner, Skeleton, Progress), data (Table, Tabs, Accordion), overlays (Modal, Dialog, Tooltip), charts (LineChart, BarChart, PieChart, AreaChart), and layouts (SidebarLayout, HeaderFooterLayout, SplitPane, TabsLayout, AccordionLayout, AutoGridLayout, MasonryLayout, ResponsiveDashboard, CardLayout, SectionLayout, StepperLayout, WizardLayout, PanelLayout, ModalLayout, DragDropLayout).
+
+### Rupa components (`rupaComponents`)
+
+Defined in `rupa-components.tsx`. These are React components that accept the context shape `{ props, children?, emit }` and render the corresponding Rupa UI component. Use them with `defineRegistry` so json-render can render by component name.
+
+### Using Rupa with json-render
+
+1. **Create a catalog** with the json-render schema and Rupa’s definitions:
+
+```tsx
+import { defineCatalog } from '@json-render/core';
+import { schema } from '@json-render/react/schema';
+import { rupaComponentDefinitions } from '@kaushik91/rupa';
+
+const catalog = defineCatalog(schema, {
+  components: {
+    ...rupaComponentDefinitions,
+    // Or pick only what you need: Card: rupaComponentDefinitions.Card, Button: rupaComponentDefinitions.Button, ...
+  },
+  actions: {},
+});
+```
+
+2. **Create a registry** with that catalog and Rupa’s components:
+
+```tsx
+import { defineRegistry } from '@json-render/react';
+import { rupaComponents } from '@kaushik91/rupa';
+import { catalog } from './catalog';
+
+const { registry } = defineRegistry(catalog, {
+  components: {
+    ...rupaComponents,
+    // Or pick: Card: rupaComponents.Card, Button: rupaComponents.Button, ...
+  },
+  actions: {},
+});
+```
+
+3. **Render** your JSON config with the json-render `Renderer`:
+
+```tsx
+import { Renderer } from '@json-render/react';
+import { registry } from './registry';
+
+const config = {
+  type: 'Card',
+  props: { className: 'shadow-lg' },
+  children: [
+    {
+      type: 'CardHeader',
+      props: {},
+      children: [{ type: 'CardTitle', props: { children: 'Hello' } }],
+    },
+    {
+      type: 'CardContent',
+      props: {},
+      children: [{ type: 'Button', props: { label: 'Submit' } }],
+    },
+  ],
+};
+
+function App() {
+  return <Renderer registry={registry} config={config} />;
+}
+```
+
+You can use Rupa components directly in React (see Quick Start and Components above) or drive them from JSON via json-render using this catalog and registry.
 
 ## Theming
 
 Customize the appearance with the built-in theme system:
 
 ```typescript
-import { createTheme } from 'rupa-ui';
+import { createTheme } from '@kaushik91/rupa';
 
 const customTheme = createTheme({
   colors: {
