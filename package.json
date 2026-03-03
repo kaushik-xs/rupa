@@ -1,6 +1,6 @@
 {
   "name": "@kaushik91/rupa",
-  "version": "0.0.1-alpha-8",
+  "version": "0.0.1-alpha-9",
   "description": "A modern UI library with flexible rendering engine and Tailwind CSS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -78,7 +78,7 @@
     "storybook": "^8.6.14",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.0.0",
-    "vite": "^7.2.6"
+    "vite": "^6.4.0"
   },
   "files": [
     "dist",

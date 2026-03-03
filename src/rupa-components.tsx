@@ -74,7 +74,29 @@ import {
   PieChart as RupaPieChart,
   AreaChart,
 } from './components';
-import { Box, Flex, Grid, Stack, Container, Spacer } from './components/layouts';
+import {
+  Box,
+  Flex,
+  Grid,
+  Stack,
+  Container,
+  Spacer,
+  SidebarLayout,
+  HeaderFooterLayout,
+  SplitPane,
+  TabsLayout,
+  AccordionLayout,
+  AutoGridLayout,
+  MasonryLayout,
+  ResponsiveDashboard,
+  CardLayout,
+  SectionLayout,
+  StepperLayout,
+  WizardLayout,
+  PanelLayout,
+  ModalLayout,
+  DragDropLayout,
+} from './components/layouts';
 
 type ComponentContext<P = Record<string, unknown>> = {
   props: P;
@@ -274,4 +296,79 @@ export const rupaComponents = {
     const keys = data[0] ? Object.keys(data[0]).filter((k) => k !== 'name') : ['value'];
     return <AreaChart data={data} areas={keys.map((dataKey) => ({ dataKey, name: dataKey }))} className={props.className ?? undefined} />;
   },
+
+  // Layout components
+  SidebarLayout: ({ props, children }: ComponentContext<{ sidebarWidth?: number | string | null; sidebarPosition?: string | null; className?: string | null }>) => (
+    <SidebarLayout sidebarWidth={props.sidebarWidth ?? undefined} sidebarPosition={(props.sidebarPosition as 'left' | 'right') ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </SidebarLayout>
+  ),
+  HeaderFooterLayout: ({ props, children }: ComponentContext<{ fullHeight?: boolean | null; className?: string | null }>) => (
+    <HeaderFooterLayout fullHeight={props.fullHeight ?? true} className={props.className ?? undefined} body={children} />
+  ),
+  SplitPane: ({ props, children }: ComponentContext<{ direction?: string | null; defaultSizes?: number[] | null; resizable?: boolean | null; className?: string | null }>) => (
+    <SplitPane direction={(props.direction as 'horizontal' | 'vertical') ?? 'horizontal'} defaultSizes={props.defaultSizes ?? undefined} resizable={props.resizable ?? true} className={props.className ?? undefined}>
+      {children}
+    </SplitPane>
+  ),
+  TabsLayout: ({ props, children }: ComponentContext<{ defaultValue?: string | null; value?: string | null; orientation?: string | null; variant?: string | null; tabs?: { value: string; label: string }[] | null; className?: string | null }>) => (
+    <TabsLayout defaultValue={props.defaultValue ?? undefined} value={props.value ?? undefined} orientation={(props.orientation as 'horizontal' | 'vertical') ?? undefined} variant={(props.variant as any) ?? undefined} tabs={props.tabs ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </TabsLayout>
+  ),
+  AccordionLayout: ({ props, children }: ComponentContext<{ type?: string | null; defaultValue?: string | string[] | null; collapsible?: boolean | null; items?: { value: string; title: string; content?: string | null }[] | null; className?: string | null }>) => (
+    <AccordionLayout type={(props.type as 'single' | 'multiple') ?? undefined} defaultValue={props.defaultValue ?? undefined} collapsible={props.collapsible ?? true} items={props.items ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </AccordionLayout>
+  ),
+  AutoGridLayout: ({ props, children }: ComponentContext<{ minItemWidth?: number | string | null; columns?: number | Record<string, number | string> | null; className?: string | null }>) => (
+    <AutoGridLayout minItemWidth={props.minItemWidth ?? undefined} columns={props.columns ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </AutoGridLayout>
+  ),
+  MasonryLayout: ({ props, children }: ComponentContext<{ columns?: number | Record<string, number> | null; columnGap?: number | string | null; rowGap?: number | string | null; className?: string | null }>) => (
+    <MasonryLayout columns={props.columns ?? undefined} columnGap={props.columnGap ?? undefined} rowGap={props.rowGap ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </MasonryLayout>
+  ),
+  ResponsiveDashboard: ({ props, children }: ComponentContext<{ columns?: Record<string, number | string> | null; className?: string | null }>) => (
+    <ResponsiveDashboard columns={props.columns ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </ResponsiveDashboard>
+  ),
+  CardLayout: ({ props, children }: ComponentContext<{ columns?: Record<string, number> | null; cardClassName?: string | null; wrapChildrenInCards?: boolean | null; className?: string | null }>) => (
+    <CardLayout columns={props.columns ?? undefined} cardClassName={props.cardClassName ?? undefined} wrapChildrenInCards={props.wrapChildrenInCards ?? true} className={props.className ?? undefined}>
+      {children}
+    </CardLayout>
+  ),
+  SectionLayout: ({ props, children }: ComponentContext<{ showDividers?: boolean | null; sectionSpacing?: number | string | null; sections?: { id?: string | null; title?: string | null; divider?: boolean | null }[] | null; className?: string | null }>) => (
+    <SectionLayout showDividers={props.showDividers ?? true} sectionSpacing={props.sectionSpacing ?? undefined} sections={props.sections ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </SectionLayout>
+  ),
+  StepperLayout: ({ props, children }: ComponentContext<{ currentStep?: number | null; orientation?: string | null; showConnector?: boolean | null; steps?: { id: string; label: string; description?: string | null }[] | null; className?: string | null }>) => (
+    <StepperLayout currentStep={props.currentStep ?? undefined} orientation={(props.orientation as 'horizontal' | 'vertical') ?? undefined} showConnector={props.showConnector ?? true} steps={props.steps ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </StepperLayout>
+  ),
+  WizardLayout: ({ props, children }: ComponentContext<{ currentStep?: number | null; showProgress?: boolean | null; showNavigation?: boolean | null; steps?: { id: string; label: string; description?: string | null }[] | null; className?: string | null }>) => (
+    <WizardLayout currentStep={props.currentStep ?? undefined} showProgress={props.showProgress ?? true} showNavigation={props.showNavigation ?? true} steps={props.steps ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </WizardLayout>
+  ),
+  PanelLayout: ({ props, children }: ComponentContext<{ defaultOpen?: boolean | null; allowMultipleOpen?: boolean | null; panels?: { id: string; title: string; defaultOpen?: boolean | null }[] | null; className?: string | null }>) => (
+    <PanelLayout defaultOpen={props.defaultOpen ?? false} allowMultipleOpen={props.allowMultipleOpen ?? true} panels={props.panels ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </PanelLayout>
+  ),
+  ModalLayout: ({ props, children }: ComponentContext<{ title?: string | null; size?: string | null; className?: string | null }>) => (
+    <ModalLayout isOpen={false} onClose={() => {}} title={props.title ?? undefined} size={(props.size as 'sm' | 'md' | 'lg' | 'xl') ?? undefined} className={props.className ?? undefined}>
+      {children}
+    </ModalLayout>
+  ),
+  DragDropLayout: ({ props, children }: ComponentContext<{ direction?: string | null; handle?: boolean | null; className?: string | null }>) => (
+    <DragDropLayout direction={(props.direction as 'vertical' | 'horizontal') ?? undefined} handle={props.handle ?? true} className={props.className ?? undefined}>
+      {children}
+    </DragDropLayout>
+  ),
 };
