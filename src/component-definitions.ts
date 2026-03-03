@@ -1,18 +1,13 @@
 /**
- * Rupa component definitions for use with defineCatalog from @json-render/core.
+ * Component definitions for use with catalog/registry patterns (e.g. defineCatalog from @json-render/core).
+ * Each entry has props (Zod schema), optional slots, and a description. Consumable by any underlying
+ * library that expects a map of component name → { props, slots?, description }.
  *
- * In your consumer app:
+ * Example (json-render):
  *   import { defineCatalog } from '@json-render/core';
  *   import { schema } from '@json-render/react/schema';
  *   import { rupaComponentDefinitions } from '@kaushik91/rupa';
- *
- *   const catalog = defineCatalog(schema, {
- *     components: {
- *       ...rupaComponentDefinitions,
- *       // or pick: Card: rupaComponentDefinitions.Card, Button: rupaComponentDefinitions.Button, ...
- *     },
- *     actions: {},
- *   });
+ *   const catalog = defineCatalog(schema, { components: { ...rupaComponentDefinitions }, actions: {} });
  */
 import { z } from 'zod';
 

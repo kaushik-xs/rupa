@@ -6,8 +6,8 @@ export * from './core/theme';
 
 // For use with defineCatalog(schema, { components: rupaComponentDefinitions, actions: {} })
 // and defineRegistry(catalog, { components: rupaComponents }) in your app
-export { rupaComponentDefinitions } from './rupa-component-definitions';
-export { rupaComponents } from './rupa-components';
+export { rupaComponentDefinitions } from './component-definitions';
+export { rupaComponents } from './component-implementations';
 
 // Legacy renderer (DOM / React tree shape)
 export * from './core/renderer';

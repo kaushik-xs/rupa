@@ -1,19 +1,12 @@
 /**
- * Rupa component implementations for use with defineRegistry from @json-render/react.
- * Each component receives { props, children?, emit } from the renderer.
+ * Component implementations for use with registry patterns (e.g. defineRegistry from @json-render/react).
+ * Each component receives { props, children?, emit } from the renderer. Consumable by any underlying
+ * library that expects a map of component name → React component with that context shape.
  *
- * In your consumer app:
+ * Example (json-render):
  *   import { defineRegistry } from '@json-render/react';
  *   import { rupaComponents } from '@kaushik91/rupa';
- *   import { catalog } from './catalog'; // your defineCatalog(schema, { components: { ...rupaComponentDefinitions }, actions: {} })
- *
- *   const { registry } = defineRegistry(catalog, {
- *     components: {
- *       ...rupaComponents,
- *       // or pick: Card: rupaComponents.Card, Button: rupaComponents.Button, ...
- *     },
- *     actions: {},
- *   });
+ *   const { registry } = defineRegistry(catalog, { components: { ...rupaComponents }, actions: {} });
  */
 import React from 'react';
 import {
