@@ -1,93 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './Accordion';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Accordion> = {
   title: 'Components/Accordion',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'padded',
-  },
+  component: Accordion,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Accordion>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Accordion',
-        componentProps: {
-          type: 'single',
-          collapsible: true,
-        },
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'AccordionItem',
-            componentProps: {
-              value: 'item-1',
-            },
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'AccordionTrigger',
-                componentProps: {
-                  children: 'Is it accessible?',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'AccordionContent',
-                componentProps: {
-                  children: 'Yes. It adheres to the WAI-ARIA design pattern.',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'AccordionItem',
-            componentProps: {
-              value: 'item-2',
-            },
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'AccordionTrigger',
-                componentProps: {
-                  children: 'Is it styled?',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'AccordionContent',
-                componentProps: {
-                  children: 'Yes. It comes with default styles that matches the other components aesthetic.',
-                },
-              },
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <Accordion type="single" collapsible className="w-96">
+      <AccordionItem value="1">
+        <AccordionTrigger>Item 1</AccordionTrigger>
+        <AccordionContent>Content for item 1.</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="2">
+        <AccordionTrigger>Item 2</AccordionTrigger>
+        <AccordionContent>Content for item 2.</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  ),
 };
-

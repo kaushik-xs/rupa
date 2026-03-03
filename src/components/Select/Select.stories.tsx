@@ -1,91 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Select } from './Select';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Select> = {
   title: 'Components/Select',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Select,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
-
-const options = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' },
-];
+type Story = StoryObj<typeof Select>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Select',
-        componentProps: {
-          options,
-          placeholder: 'Select an option...',
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
+  args: {
+    placeholder: 'Select an option',
+    options: [
+      { value: 'a', label: 'Option A' },
+      { value: 'b', label: 'Option B' },
+      { value: 'c', label: 'Option C' },
+    ],
   },
 };
-
-export const WithLabel: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        direction: 'column',
-        gap: 2,
-        className: 'w-64',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Label',
-            componentProps: {
-              children: 'Choose an option',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Select',
-            componentProps: {
-              options,
-              placeholder: 'Select...',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
-
-export const MultiSelect: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Select',
-        componentProps: {
-          options,
-          isMulti: true,
-          placeholder: 'Select multiple options...',
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
-

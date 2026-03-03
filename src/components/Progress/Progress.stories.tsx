@@ -1,78 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Progress } from './Progress';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Progress> = {
   title: 'Components/Progress',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Progress,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Progress>;
 
-export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Progress',
-        componentProps: {
-          value: 33,
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Default: Story = { args: { value: 60 } };
 
-export const Variants: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        direction: 'column',
-        gap: 4,
-        className: 'w-64',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Progress',
-            componentProps: {
-              value: 33,
-              variant: 'default',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Progress',
-            componentProps: {
-              value: 66,
-              variant: 'success',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Progress',
-            componentProps: {
-              value: 100,
-              variant: 'warning',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Full: Story = { args: { value: 100 } };
 
+export const Empty: Story = { args: { value: 0 } };

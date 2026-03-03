@@ -1,201 +1,49 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-// Import to register all components
-import '../../core/register-components';
+import { Button } from './Button';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Button> = {
   title: 'Components/Button',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Button,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Button',
-        componentProps: {
-          children: 'Button',
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  args: { children: 'Button' },
 };
 
 export const Variants: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        gap: 4,
-        wrap: true,
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'default',
-              children: 'Default',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'secondary',
-              children: 'Secondary',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'destructive',
-              children: 'Destructive',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'outline',
-              children: 'Outline',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'ghost',
-              children: 'Ghost',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'link',
-              children: 'Link',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+      <Button variant="default">Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  ),
 };
 
 export const Sizes: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        gap: 4,
-        align: 'center',
-        wrap: true,
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              size: 'sm',
-              children: 'Small',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              size: 'default',
-              children: 'Default',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              size: 'lg',
-              children: 'Large',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+      <Button size="sm">Small</Button>
+      <Button size="default">Default</Button>
+      <Button size="lg">Large</Button>
+    </div>
+  ),
 };
 
 export const Disabled: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        gap: 4,
-        wrap: true,
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              disabled: true,
-              children: 'Disabled Default',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'secondary',
-              disabled: true,
-              children: 'Disabled Secondary',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Button',
-            componentProps: {
-              variant: 'destructive',
-              disabled: true,
-              children: 'Disabled Destructive',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+      <Button disabled>Disabled Default</Button>
+      <Button variant="secondary" disabled>Disabled Secondary</Button>
+      <Button variant="destructive" disabled>Disabled Destructive</Button>
+    </div>
+  ),
 };
-

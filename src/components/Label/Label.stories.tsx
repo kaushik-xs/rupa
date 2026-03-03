@@ -1,69 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Label } from './Label';
+import { Input } from '../Input/Input';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Label> = {
   title: 'Components/Label',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Label,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Label>;
 
-export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Label',
-        componentProps: {
-          children: 'Label',
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Default: Story = { args: { children: 'Label' } };
 
 export const WithInput: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        direction: 'column',
-        gap: 2,
-        className: 'w-64',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Label',
-            componentProps: {
-              htmlFor: 'email',
-              children: 'Email',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Input',
-            componentProps: {
-              id: 'email',
-              type: 'email',
-              placeholder: 'Enter your email',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: 256 }}>
+      <Label htmlFor="email">Email</Label>
+      <Input id="email" type="email" placeholder="Enter your email" />
+    </div>
+  ),
 };
-

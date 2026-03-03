@@ -1,121 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { RadioGroup, RadioGroupItem } from './RadioGroup';
+import { Label } from '../Label/Label';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof RadioGroup> = {
   title: 'Components/RadioGroup',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: RadioGroup,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof RadioGroup>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'RadioGroup',
-        componentProps: {
-          defaultValue: 'option1',
-        },
-      },
-      children: [
-        {
-          type: 'flex',
-          props: {
-            align: 'center',
-            gap: 2,
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'RadioGroupItem',
-                componentProps: {
-                  value: 'option1',
-                  id: 'option1',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'Label',
-                componentProps: {
-                  htmlFor: 'option1',
-                  children: 'Option 1',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'flex',
-          props: {
-            align: 'center',
-            gap: 2,
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'RadioGroupItem',
-                componentProps: {
-                  value: 'option2',
-                  id: 'option2',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'Label',
-                componentProps: {
-                  htmlFor: 'option2',
-                  children: 'Option 2',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'flex',
-          props: {
-            align: 'center',
-            gap: 2,
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'RadioGroupItem',
-                componentProps: {
-                  value: 'option3',
-                  id: 'option3',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'Label',
-                componentProps: {
-                  htmlFor: 'option3',
-                  children: 'Option 3',
-                },
-              },
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <RadioGroup defaultValue="a" className="flex flex-col gap-2">
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="a" id="a" />
+        <Label htmlFor="a">Option A</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="b" id="b" />
+        <Label htmlFor="b">Option B</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="c" id="c" />
+        <Label htmlFor="c">Option C</Label>
+      </div>
+    </RadioGroup>
+  ),
 };
-

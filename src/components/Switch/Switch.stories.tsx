@@ -1,79 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Switch } from './Switch';
+import { Label } from '../Label/Label';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Switch> = {
   title: 'Components/Switch',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Switch,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Switch>;
 
-export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Switch',
-        componentProps: {},
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Default: Story = {};
 
 export const WithLabel: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        align: 'center',
-        gap: 2,
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Switch',
-            componentProps: {
-              id: 'notifications',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Label',
-            componentProps: {
-              htmlFor: 'notifications',
-              children: 'Enable notifications',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Switch id="sw1" />
+      <Label htmlFor="sw1">Enable notifications</Label>
+    </div>
+  ),
 };
 
-export const Disabled: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Switch',
-        componentProps: {
-          disabled: true,
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
-
+export const Checked: Story = { args: { defaultChecked: true } };

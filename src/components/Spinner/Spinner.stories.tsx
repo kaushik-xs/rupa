@@ -1,72 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Spinner } from './Spinner';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Spinner> = {
   title: 'Components/Spinner',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Spinner,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Spinner>;
 
-export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Spinner',
-        componentProps: {},
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Default: Story = {};
 
 export const Sizes: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        gap: 4,
-        align: 'center',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Spinner',
-            componentProps: {
-              size: 'sm',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Spinner',
-            componentProps: {
-              size: 'default',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Spinner',
-            componentProps: {
-              size: 'lg',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+      <Spinner size="sm" />
+      <Spinner size="default" />
+      <Spinner size="lg" />
+    </div>
+  ),
 };
-

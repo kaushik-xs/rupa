@@ -3,14 +3,8 @@ import { fn } from '@storybook/test';
 import { Trash2, Pencil, Download } from 'lucide-react';
 import { DataTable } from './DataTable';
 import type { DataTableColumn, DataTableBulkAction, DataTableRowAction } from './types';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import type { LayoutNode } from '../../types/layout';
-import {
-  dashboardConfig,
-  masterDetailConfig,
-  tabsWithTableConfig,
-  dataTableColumnsConfig,
-} from './example-configs';
+import { dataTableColumnsConfig } from './example-configs';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Card/Card';
 
 type User = {
   id: string;
@@ -627,119 +621,26 @@ export const Loading: Story = {
   },
 };
 
-// ——— Examples: JSON config + LayoutRenderer (same chunk to avoid dynamic import failure) ———
-
-/** Dashboard: Breadcrumb + summary cards (from context) + Card(DataTable). Config in example-configs.ts. */
-export const ExampleDashboardWithTable: Story = {
-  render: function ExampleDashboardWithTableRender() {
-    const activeCount = sampleData.filter((u) => u.status === 'Active').length;
-    const inactiveCount = sampleData.filter((u) => u.status === 'Inactive').length;
-    const initialContext = {
-      users_data: sampleData,
-      users_total: sampleData.length,
-      users_active: activeCount,
-      users_inactive: inactiveCount,
-    };
-    return <LayoutRenderer config={dashboardConfig} initialContext={initialContext} />;
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'JSON config: flex → Breadcrumb, grid of Cards (summary), Card(DataTable). Data and counts from initialContext (users_data, users_total, users_active, users_inactive).',
-      },
-    },
+/** DataTable with Card wrapper (direct component usage). */
+export const ExampleDataTableInCard: Story = {
+  render: function ExampleDataTableInCardRender() {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Users</CardTitle>
+          <CardDescription>DataTable with columns from example-configs.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <DataTable
+            data={sampleData}
+            columns={columnsWithFormats}
+            getRowId={(row) => row.id}
+            pagination={{ pageSize: 5 }}
+            emptyMessage="No users found"
+          />
+        </CardContent>
+      </Card>
+    );
   },
 };
 
-/** Master-detail: DataTable rowActions set context (selectedUser, sheetOpen); Sheet open from context, closeContextKeys clear on close. */
-export const ExampleMasterDetailWithSheet: Story = {
-  render: function ExampleMasterDetailWithSheetRender() {
-    const initialContext = {
-      users_data: sampleData,
-      sheetOpen: false,
-      selectedUser: null,
-    };
-    return <LayoutRenderer config={masterDetailConfig} initialContext={initialContext} />;
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'JSON config: Card(DataTable with rowActions setContext: { selectedUser: "row", sheetOpen: true }) + Sheet (open: {{sheetOpen}}, closeContextKeys). LayoutRenderer injects rowActions onClick and Sheet onOpenChange.',
-      },
-    },
-  },
-};
-
-/** Tabs + DataTable: tab value and filtered data from context; onValueChangeContextKey updates context. */
-export const ExampleTabsWithDataTable: Story = {
-  render: function ExampleTabsWithDataTableRender() {
-    const activeData = sampleData.filter((u) => u.status === 'Active');
-    const inactiveData = sampleData.filter((u) => u.status === 'Inactive');
-    const initialContext = {
-      tab_value: 'all',
-      users_data: sampleData,
-      users_data_active: activeData,
-      users_data_inactive: inactiveData,
-    };
-    return <LayoutRenderer config={tabsWithTableConfig} initialContext={initialContext} />;
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'JSON config: Card → Tabs (value: {{tab_value}}, onValueChangeContextKey: tab_value) + TabsContent per tab, each with DataTable (data from context).',
-      },
-    },
-  },
-};
-
-/** Minimal: single DataTable from JSON (columns + getRowIdKey + data from context). */
-export const ExampleDataTableFromJsonOnly: Story = {
-  render: function ExampleDataTableFromJsonOnlyRender() {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Card',
-      },
-      children: [
-        {
-          type: 'component',
-          props: { component: 'CardHeader' },
-          children: [
-            { type: 'component', props: { component: 'CardTitle', componentProps: { children: 'Users' } } },
-            { type: 'component', props: { component: 'CardDescription', componentProps: { children: 'DataTable driven by JSON config + context.' } } },
-          ],
-        },
-        {
-          type: 'component',
-          props: { component: 'CardContent' },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'DataTable',
-                componentProps: {
-                  data: '{{users_data}}',
-                  getRowIdKey: 'id',
-                  columns: dataTableColumnsConfig,
-                  pagination: { pageSize: 5, pageSizeOptions: [5, 10], showPageSizeSelector: true },
-                  emptyMessage: 'No users found',
-                },
-              },
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} initialContext={{ users_data: sampleData }} />;
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Minimal example: Card(DataTable) with data from context, columns and getRowIdKey from JSON. No row actions.',
-      },
-    },
-  },
-};

@@ -1,69 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './Tooltip';
+import { Button } from '../Button/Button';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Tooltip> = {
   title: 'Components/Tooltip',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Tooltip,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'TooltipProvider',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Tooltip',
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'TooltipTrigger',
-                componentProps: {
-                  asChild: true,
-                },
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'Button',
-                    componentProps: {
-                      variant: 'outline',
-                      children: 'Hover me',
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'TooltipContent',
-                componentProps: {
-                  children: 'This is a tooltip',
-                },
-              },
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Hover me</Button>
+        </TooltipTrigger>
+        <TooltipContent>Tooltip content</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  ),
 };
-

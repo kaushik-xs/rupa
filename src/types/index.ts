@@ -66,24 +66,8 @@ export interface ComponentNode {
 export type ComponentVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
 export type ComponentSize = 'sm' | 'md' | 'lg';
 
-// Layout types
-// Export all layout types except LayoutContext (exported from layout-renderer with extensions)
-export type {
-  Breakpoint,
-  ResponsiveValue,
-  SpacingValue,
-  LayoutNode,
-  LayoutProps,
-  ComponentLayoutNode,
-  LayoutConfig,
-  LayoutRegistryEntry,
-  WidgetRegistryEntry,
-  DataSourceConfig,
-  OnLoadConfig,
-  OnLoadApiCall,
-  OnLoadResult,
-  OnLoadError,
-} from './layout';
+// Layout types (for layout primitives: Box, Flex, Stack, Grid, etc.)
+export type { Breakpoint, ResponsiveValue, SpacingValue, LayoutProps } from './layout';
 
 // Form types
 export type {

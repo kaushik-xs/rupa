@@ -1,5 +1,4 @@
 import { ComponentNode, Renderer, RendererConfig } from '../types';
-import type { LayoutNode } from '../types/layout';
 
 export class DOMRenderer implements Renderer {
   render(component: ComponentNode, config: RendererConfig): HTMLElement {
@@ -54,20 +53,14 @@ export class DOMRenderer implements Renderer {
 
 export class ReactRenderer implements Renderer {
   render(component: ComponentNode, config: RendererConfig): any {
-    // For React, we return a component structure that can be used with LayoutRenderer
-    // The actual rendering is handled by LayoutRenderer component
-    
-    // Convert ComponentNode to LayoutNode format
-    const layoutNode: LayoutNode = {
+    // Returns a tree structure for React; use @json-render/react Renderer with rupa catalog/registry for rendering.
+    return {
       type: component.type,
       props: component.props,
-      children: component.children?.map(child => 
-        typeof child === 'string' ? undefined : this.render(child, config)
-      ).filter(Boolean) as LayoutNode[],
+      children: component.children?.map((child) =>
+        typeof child === 'object' ? this.render(child, config) : child
+      ),
     };
-    
-    // Return the layout node structure - actual rendering happens via LayoutRenderer component
-    return layoutNode;
   }
 
   mount(element: any, container: HTMLElement | string): void {

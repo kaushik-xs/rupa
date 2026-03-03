@@ -1,102 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'padded',
-  },
+  component: Tabs,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Tabs>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Tabs',
-        componentProps: {
-          defaultValue: 'tab1',
-        },
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'TabsList',
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'TabsTrigger',
-                componentProps: {
-                  value: 'tab1',
-                  children: 'Tab 1',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'TabsTrigger',
-                componentProps: {
-                  value: 'tab2',
-                  children: 'Tab 2',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'TabsTrigger',
-                componentProps: {
-                  value: 'tab3',
-                  children: 'Tab 3',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'TabsContent',
-            componentProps: {
-              value: 'tab1',
-              children: 'Content for Tab 1',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'TabsContent',
-            componentProps: {
-              value: 'tab2',
-              children: 'Content for Tab 2',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'TabsContent',
-            componentProps: {
-              value: 'tab3',
-              children: 'Content for Tab 3',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <Tabs defaultValue="tab1" className="w-96">
+      <TabsList>
+        <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+        <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+      </TabsList>
+      <TabsContent value="tab1">Content for tab 1.</TabsContent>
+      <TabsContent value="tab2">Content for tab 2.</TabsContent>
+      <TabsContent value="tab3">Content for tab 3.</TabsContent>
+    </Tabs>
+  ),
 };
-

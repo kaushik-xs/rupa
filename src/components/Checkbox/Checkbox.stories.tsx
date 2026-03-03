@@ -1,79 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-import '../../core/register-components';
+import { Checkbox } from './Checkbox';
+import { Label } from '../Label/Label';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Checkbox> = {
   title: 'Components/Checkbox',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Checkbox,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Checkbox>;
 
-export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Checkbox',
-        componentProps: {},
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Default: Story = { args: {} };
 
 export const WithLabel: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'flex',
-      props: {
-        align: 'center',
-        gap: 2,
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'Checkbox',
-            componentProps: {
-              id: 'terms',
-            },
-          },
-        },
-        {
-          type: 'component',
-          props: {
-            component: 'Label',
-            componentProps: {
-              htmlFor: 'terms',
-              children: 'Accept terms and conditions',
-            },
-          },
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Checkbox id="cb1" />
+      <Label htmlFor="cb1">Accept terms</Label>
+    </div>
+  ),
 };
 
-export const Disabled: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Checkbox',
-        componentProps: {
-          disabled: true,
-        },
-      },
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
+export const Checked: Story = { args: { checked: true } };
 
+export const Disabled: Story = { args: { disabled: true } };

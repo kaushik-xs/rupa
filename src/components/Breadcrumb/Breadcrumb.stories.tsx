@@ -1,260 +1,39 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LayoutRenderer } from '../../core/layout-renderer';
-import { LayoutNode } from '../../types/layout';
-// Import to register all components
-import '../../core/register-components';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from './Breadcrumb';
 
-const meta: Meta<typeof LayoutRenderer> = {
+const meta: Meta<typeof Breadcrumb> = {
   title: 'Components/Breadcrumb',
-  component: LayoutRenderer,
-  parameters: {
-    layout: 'centered',
-  },
+  component: Breadcrumb,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof LayoutRenderer>;
+type Story = StoryObj<typeof Breadcrumb>;
 
 export const Default: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Breadcrumb',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'BreadcrumbList',
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbLink',
-                    componentProps: {
-                      href: '/',
-                      children: 'Home',
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbSeparator',
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbPage',
-                    componentProps: {
-                      children: 'Breadcrumb',
-                    },
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
-
-export const WithMultipleItems: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Breadcrumb',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'BreadcrumbList',
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbLink',
-                    componentProps: {
-                      href: '/',
-                      children: 'Home',
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbSeparator',
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbLink',
-                    componentProps: {
-                      href: '/components',
-                      children: 'Components',
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbSeparator',
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbPage',
-                    componentProps: {
-                      children: 'Breadcrumb',
-                    },
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
-};
-
-export const CustomSeparator: Story = {
-  render: () => {
-    const config: LayoutNode = {
-      type: 'component',
-      props: {
-        component: 'Breadcrumb',
-      },
-      children: [
-        {
-          type: 'component',
-          props: {
-            component: 'BreadcrumbList',
-          },
-          children: [
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbLink',
-                    componentProps: {
-                      href: '/',
-                      children: 'Home',
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbSeparator',
-                componentProps: {
-                  children: '/',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbLink',
-                    componentProps: {
-                      href: '/docs',
-                      children: 'Documentation',
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbSeparator',
-                componentProps: {
-                  children: '/',
-                },
-              },
-            },
-            {
-              type: 'component',
-              props: {
-                component: 'BreadcrumbItem',
-              },
-              children: [
-                {
-                  type: 'component',
-                  props: {
-                    component: 'BreadcrumbPage',
-                    componentProps: {
-                      children: 'Getting Started',
-                    },
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    };
-    return <LayoutRenderer config={config} />;
-  },
+  render: () => (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Components</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  ),
 };
