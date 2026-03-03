@@ -1,9 +1,17 @@
 {
   "name": "@kaushik91/rupa",
-  "version": "0.0.1",
+  "version": "0.0.2-alpha-1",
   "description": "A modern UI library with flexible rendering engine and Tailwind CSS",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsc && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/input.css -o ./dist/styles.css --minify",
