@@ -187,90 +187,193 @@ const renderer = RendererFactory.create('react');
 const element = renderer.render(component, { target: 'react' });
 ```
 
-## Component definitions and Rupa components (json-render)
+## Example usage with json-render
 
-Rupa ships two artifacts for use with [json-render](https://github.com/kaushiksundar/json-render):
+Rupa is built to work with [json-render](https://json-render.dev/docs) for **generative UI**: AI-generated interfaces that render with your components. You export **definitions** (for the catalog) and **implementations** (for the registry); your app wires them with `defineCatalog` and `defineRegistry`.
 
-- **`rupaComponentDefinitions`** — Zod-based **definitions** (props schema, slots, description) for each component. Used with `defineCatalog` from `@json-render/core` so the renderer knows how to validate and describe components.
-- **`rupaComponents`** — **React implementations** for those components. Each receives `{ props, children?, emit }` from the json-render runtime. Used with `defineRegistry` from `@json-render/react` to map component names to actual React components.
+### 1. Install dependencies
 
-### Definitions (`rupaComponentDefinitions`)
+```bash
+npm install @kaushik91/rupa @json-render/core @json-render/react zod
+```
 
-Defined in `rupa-component-definitions.ts`. Each entry has:
+### 2. Create the catalog
 
-- **`props`** — A Zod schema for the component’s props (e.g. `label`, `variant`, `className`).
-- **`slots`** — Optional list of slot names (e.g. `['default']`) for children.
-- **`description`** — Short description for tooling or AI.
+Use Rupa’s component definitions with the json-render schema so the AI (and validator) know which components exist and their props.
 
-Included definitions cover layout (Box, Stack, Flex, Grid, Container, Spacer), buttons (Button, ButtonGroup), cards (Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter), forms (Input, Label, Textarea, Checkbox, Switch, Slider, Select, RadioGroup), feedback (Badge, Alert, Spinner, Skeleton, Progress), data (Table, Tabs, Accordion), overlays (Modal, Dialog, Tooltip), charts (LineChart, BarChart, PieChart, AreaChart), and layouts (SidebarLayout, HeaderFooterLayout, SplitPane, TabsLayout, AccordionLayout, AutoGridLayout, MasonryLayout, ResponsiveDashboard, CardLayout, SectionLayout, StepperLayout, WizardLayout, PanelLayout, ModalLayout, DragDropLayout).
+```tsx
+// lib/catalog.ts
+import { defineCatalog } from '@json-render/core';
+import { schema } from '@json-render/react/schema';
+import { rupaComponentDefinitions } from '@kaushik91/rupa';
 
-### Rupa components (`rupaComponents`)
+export const catalog = defineCatalog(schema, {
+  components: {
+    ...rupaComponentDefinitions,
+  },
+  actions: {},
+});
+```
 
-Defined in `rupa-components.tsx`. These are React components that accept the context shape `{ props, children?, emit }` and render the corresponding Rupa UI component. Use them with `defineRegistry` so json-render can render by component name.
+**Pick only the components you need:**
 
-### Using Rupa with json-render
+```tsx
+export const catalog = defineCatalog(schema, {
+  components: {
+    Card: rupaComponentDefinitions.Card,
+    CardHeader: rupaComponentDefinitions.CardHeader,
+    CardTitle: rupaComponentDefinitions.CardTitle,
+    CardContent: rupaComponentDefinitions.CardContent,
+    Stack: rupaComponentDefinitions.Stack,
+    Button: rupaComponentDefinitions.Button,
+    Input: rupaComponentDefinitions.Input,
+  },
+  actions: {},
+});
+```
 
-1. **Create a catalog** with the json-render schema and Rupa’s definitions:
+### 3. Create the registry
+
+Map catalog component names to Rupa’s React implementations.
+
+```tsx
+// lib/registry.tsx
+import { defineRegistry } from '@json-render/react';
+import { rupaComponents } from '@kaushik91/rupa';
+import { catalog } from './catalog';
+
+export const { registry, handlers, executeAction } = defineRegistry(catalog, {
+  components: {
+    ...rupaComponents,
+  },
+  actions: {},
+});
+```
+
+**Pick only the components you need:**
+
+```tsx
+export const { registry } = defineRegistry(catalog, {
+  components: {
+    Card: rupaComponents.Card,
+    CardHeader: rupaComponents.CardHeader,
+    CardTitle: rupaComponents.CardTitle,
+    CardContent: rupaComponents.CardContent,
+    Stack: rupaComponents.Stack,
+    Button: rupaComponents.Button,
+    Input: rupaComponents.Input,
+  },
+  actions: {},
+});
+```
+
+### 4. Render in your app
+
+Use the json-render `Renderer` with your registry. Wrap with the providers required by your json-render version (e.g. `StateProvider`, `VisibilityProvider`, `ActionProvider`).
+
+```tsx
+// app/page.tsx
+'use client';
+
+import { Renderer, StateProvider, VisibilityProvider } from '@json-render/react';
+import { registry } from '@/lib/registry';
+
+// Example spec (shape depends on your json-render version)
+const spec = {
+  root: 'card-1',
+  elements: {
+    'card-1': {
+      key: 'card-1',
+      type: 'Card',
+      props: { className: 'shadow-lg' },
+      children: ['card-header-1', 'card-content-1'],
+    },
+    'card-header-1': {
+      key: 'card-header-1',
+      type: 'CardHeader',
+      props: {},
+      children: ['card-title-1'],
+    },
+    'card-title-1': {
+      key: 'card-title-1',
+      type: 'CardTitle',
+      props: { children: 'Welcome' },
+    },
+    'card-content-1': {
+      key: 'card-content-1',
+      type: 'CardContent',
+      props: {},
+      children: ['btn-1'],
+    },
+    'btn-1': {
+      key: 'btn-1',
+      type: 'Button',
+      props: { label: 'Get started' },
+    },
+  },
+};
+
+export default function Page() {
+  return (
+    <StateProvider initialState={{}}>
+      <VisibilityProvider>
+        <Renderer spec={spec} registry={registry} />
+      </VisibilityProvider>
+    </StateProvider>
+  );
+}
+```
+
+Check the [json-render docs](https://json-render.dev/docs) for the exact spec shape and provider setup in your version.
+
+### 5. Mix Rupa with other libraries
+
+You can combine Rupa with other json-render-compatible libraries (e.g. shadcn) in one catalog and registry.
 
 ```tsx
 import { defineCatalog } from '@json-render/core';
 import { schema } from '@json-render/react/schema';
 import { rupaComponentDefinitions } from '@kaushik91/rupa';
+import { shadcnComponentDefinitions } from '@json-render/shadcn/catalog';
 
 const catalog = defineCatalog(schema, {
   components: {
-    ...rupaComponentDefinitions,
-    // Or pick only what you need: Card: rupaComponentDefinitions.Card, Button: rupaComponentDefinitions.Button, ...
+    Card: rupaComponentDefinitions.Card,
+    Stack: rupaComponentDefinitions.Stack,
+    Button: rupaComponentDefinitions.Button,
+    Input: rupaComponentDefinitions.Input,
+    Heading: shadcnComponentDefinitions.Heading,
   },
   actions: {},
 });
 ```
-
-2. **Create a registry** with that catalog and Rupa’s components:
 
 ```tsx
 import { defineRegistry } from '@json-render/react';
 import { rupaComponents } from '@kaushik91/rupa';
+import { shadcnComponents } from '@json-render/shadcn';
 import { catalog } from './catalog';
 
-const { registry } = defineRegistry(catalog, {
+export const { registry } = defineRegistry(catalog, {
   components: {
-    ...rupaComponents,
-    // Or pick: Card: rupaComponents.Card, Button: rupaComponents.Button, ...
+    Card: rupaComponents.Card,
+    Stack: rupaComponents.Stack,
+    Button: rupaComponents.Button,
+    Input: rupaComponents.Input,
+    Heading: shadcnComponents.Heading,
   },
   actions: {},
 });
 ```
 
-3. **Render** your JSON config with the json-render `Renderer`:
+### What Rupa exports for json-render
 
-```tsx
-import { Renderer } from '@json-render/react';
-import { registry } from './registry';
+| Export | Purpose |
+|--------|--------|
+| **`rupaComponentDefinitions`** | Object of catalog entries: `props` (Zod schema), optional `slots: ['default']`, and AI-friendly `description`. Use with `defineCatalog(schema, { components: rupaComponentDefinitions, actions: {} })`. |
+| **`rupaComponents`** | Object of React components that accept `{ props, children?, emit }`. Use with `defineRegistry(catalog, { components: rupaComponents, actions: {} })`. |
 
-const config = {
-  type: 'Card',
-  props: { className: 'shadow-lg' },
-  children: [
-    {
-      type: 'CardHeader',
-      props: {},
-      children: [{ type: 'CardTitle', props: { children: 'Hello' } }],
-    },
-    {
-      type: 'CardContent',
-      props: {},
-      children: [{ type: 'Button', props: { label: 'Submit' } }],
-    },
-  ],
-};
-
-function App() {
-  return <Renderer registry={registry} config={config} />;
-}
-```
-
-You can use Rupa components directly in React (see Quick Start and Components above) or drive them from JSON via json-render using this catalog and registry.
+Definitions and components are provided for layout primitives (Box, Stack, Flex, Grid, Container, Spacer), buttons, cards, forms, feedback (Alert, Badge, Spinner, Progress), data (Table, Tabs, Accordion), overlays (Modal, Dialog, Tooltip), charts (LineChart, BarChart, PieChart, AreaChart), and layout components (SidebarLayout, HeaderFooterLayout, SplitPane, TabsLayout, AccordionLayout, AutoGridLayout, MasonryLayout, ResponsiveDashboard, CardLayout, SectionLayout, StepperLayout, WizardLayout, PanelLayout, ModalLayout, DragDropLayout). Use the catalog’s `description` fields to build AI context for generative UI.
 
 ## Theming
 
