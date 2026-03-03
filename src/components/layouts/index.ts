@@ -63,11 +63,5 @@ export { ModalLayout } from './interaction/ModalLayout/ModalLayout';
 export type { ModalLayoutProps } from './interaction/ModalLayout/ModalLayout';
 
 // Canvas/Design Layouts
-export { FreePositionLayout } from './canvas/FreePositionLayout/FreePositionLayout';
-export type { FreePositionLayoutProps, PositionedItem } from './canvas/FreePositionLayout/FreePositionLayout';
-
 export { DragDropLayout } from './canvas/DragDropLayout/DragDropLayout';
 export type { DragDropLayoutProps } from './canvas/DragDropLayout/DragDropLayout';
-
-export { FlowLayout } from './canvas/FlowLayout/FlowLayout';
-export type { FlowLayoutProps, FlowNode, FlowEdge } from './canvas/FlowLayout/FlowLayout';
